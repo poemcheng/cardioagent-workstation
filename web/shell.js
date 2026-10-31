@@ -16,7 +16,7 @@ function navigate(path,replace=false){
  const route=new URL(path,'https://cardio.invalid');if(route.origin!=='https://cardio.invalid')throw Error('Invalid route');
  const query=new URLSearchParams(route.search);query.set('view',route.pathname==='/analysis'?'analysis':route.pathname==='/research'?'research':'report');
  const address=new URL(location.href);address.search=query.toString();history[replace?'replaceState':'pushState']({},'',address);
- frame.src='frame.html?'+query;frame.hidden=false;boot.hidden=true;
+ frame.src='frame.html?'+query+'&build=2.1.0-public2';frame.hidden=false;boot.hidden=true;
 }
 window.CardioBrowser={request,navigate};
 function fail(error){status.textContent='載入未完成，請檢查網路後重試。';document.getElementById('spinner').hidden=true;document.getElementById('retry').hidden=false;document.getElementById('failure').hidden=false;document.getElementById('failureText').textContent=String(error);}

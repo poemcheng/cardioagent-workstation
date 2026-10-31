@@ -17,12 +17,13 @@
   "amd_hardware_verified": false,
   "npu_execution_verified": false,
   "hospital_integration_verified": false,
-  "browser_visual_qa": false,
+  "browser_visual_qa": true,
   "clinical_accuracy_verified": false,
   "default_data_dir": "integrated_demo_data/",
   "revision_integrity_regressions": 14,
   "public_browser_runtime": true,
-  "public_browser_execution_verified": false,
+  "public_browser_execution_verified": true,
   "public_url": "https://poemcheng.github.io/cardioagent-workstation/",
-  "github_repository": "https://github.com/poemcheng/cardioagent-workstation"
+  "github_repository": "https://github.com/poemcheng/cardioagent-workstation",
+  "browser_visual_qa_scope": "desktop Chrome public MRI analysis,WebGL,review and report preparation"
 }

@@ -1,0 +1,27 @@
+{
+  "schema": "cardio-public-browser-verification/1",
+  "checked_at": "2026-10-31T15:40:51.400277+00:00",
+  "url": "https://poemcheng.github.io/cardioagent-workstation/",
+  "source_commit": "0d93e070a3f21a0c1eb0b224f4ec30ba061ab24e",
+  "browser": "connected desktop Chrome",
+  "mocked_canvas": false,
+  "mocked_images": false,
+  "python_pipeline_executed_in_browser": true,
+  "checks": [
+    "public HTTPS page loads the actual Python Web Worker",
+    "MRI provided-label reconstruction:75846voxels,2412triangles,voxel units and no self-Dice",
+    "MRI threshold128:295603voxels,Dice0.1815,IoU0.0998 and no invented physical volume",
+    "real WebGL surface and interactive evidence SVG render",
+    "unsaved discussion note disables approval",
+    "unchecked review confirmation leaves analysis pending",
+    "checked review records approval and transfers facts to the matching report",
+    "report copy,manual edit,draft save and preliminary submission execute",
+    "a second public browser tab starts without the first tab analyses or report"
+  ],
+  "report_final_signing_in_browser": "not independently observed after browser debugger timeout",
+  "browser_runtime_report_signing_test": "passed with demo attestation kind and stored revision",
+  "download_file_delivery": "not independently observed after browser debugger timeout; explicit export dialog added for retry",
+  "amd_hardware_verified": false,
+  "npu_execution_verified": false,
+  "clinical_accuracy_verified": false
+}

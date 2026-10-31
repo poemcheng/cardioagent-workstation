@@ -5,6 +5,6 @@ test_report_signature_is_labelled_as_demo_attestation (test_browser_runtime.Brow
 test_visitors_have_independent_sqlite_analyses_and_csrf (test_browser_runtime.BrowserRuntimeTests.test_visitors_have_independent_sqlite_analyses_and_csrf) ... ok
 
 ----------------------------------------------------------------------
-Ran 5 tests in 0.792s
+Ran 5 tests in 0.796s
 
 OK

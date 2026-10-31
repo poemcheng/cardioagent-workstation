@@ -12,7 +12,13 @@
   const url=new URL(href,location.href);if(url.origin!==location.origin)return;
   if(link.getAttribute('aria-disabled')==='true'){event.preventDefault();return;}
   const internal=route(url.href);if(internal?.startsWith('/api/demo/sources/'))return;
-  if(internal){event.preventDefault();try{const response=await api.request(internal);if(!response.ok){const data=await response.json();throw Error(data.error||'匯出失敗');}const blob=await response.blob(),download=document.createElement('a'),objectURL=URL.createObjectURL(blob);download.href=objectURL;download.download=(response.headers.get('Content-Disposition')||'').match(/filename="([^"]+)"/)?.[1]||'CardioAgent-result.json';download.click();setTimeout(()=>URL.revokeObjectURL(objectURL),5000);}catch(error){window.alert(error.message);}return;}
+  if(internal){event.preventDefault();try{
+   const response=await api.request(internal);if(!response.ok){const data=await response.json();throw Error(data.error||'匯出失敗');}
+   const blob=await response.blob(),download=document.createElement('a'),objectURL=URL.createObjectURL(blob),dialog=document.createElement('dialog'),heading=document.createElement('h2'),detail=document.createElement('p'),close=document.createElement('button');
+   download.href=objectURL;download.download=(response.headers.get('Content-Disposition')||'').match(/filename="([^"]+)"/)?.[1]||'CardioAgent-result.json';download.textContent='下載 '+download.download;download.className='primary';
+   heading.textContent='匯出檔案已準備完成';detail.textContent=`${download.download} · ${(blob.size/1024).toFixed(1)} KB · 由本分頁產生`;
+   close.textContent='關閉';close.onclick=()=>dialog.close();dialog.id='browserExportDialog';dialog.append(heading,detail,download,document.createTextNode('　'),close);document.body.append(dialog);dialog.addEventListener('close',()=>{dialog.remove();setTimeout(()=>URL.revokeObjectURL(objectURL),60000);},{once:true});dialog.showModal();
+  }catch(error){window.alert(error.message);}return;}
   if(['/','/analysis','/research'].includes(url.pathname)){event.preventDefault();api.navigate(url.pathname+url.search);}
  },true);
  document.addEventListener('DOMContentLoaded',()=>{for(const id of ['usersBtn','logout']){const button=document.getElementById(id);if(button)button.hidden=true;}const strip=document.querySelector('.environment-strip');if(strip)strip.firstChild.textContent='資料環境：公開研究展示 · 本分頁獨立運算 ';});

@@ -82,7 +82,14 @@ class BrowserRuntimeTests(unittest.TestCase):
         result=self.post('/api/analyses',{'case_id':'demo-ct-positive','mode':'demo','center':1})
         review=self.post('/api/analyses/'+result['id']+'/review',{'version':result['version'],'decision':'approve','review_confirmed':True})
         self.assertEqual(review['review']['actor'],'browser-visitor')
-        self.assertEqual(self.raw('/api/analyses/'+result['id']+'/report-draft')['status'],200)
+        draft=self.get('/api/analyses/'+result['id']+'/report-draft')
+        study=next(s for s in self.get('/api/hospital/studies') if s['case_id']==result['case_id'])
+        saved=self.post('/api/hospital/studies/'+study['id']+'/report',{'version':0,'status':'draft','fields':draft['fields']})
+        preliminary=self.post('/api/hospital/studies/'+study['id']+'/report',{'version':saved['version'],'status':'preliminary','fields':draft['fields']})
+        signed=self.post('/api/hospital/studies/'+study['id']+'/report/sign',{'version':preliminary['version'],'review_confirmed':True})
+        self.assertEqual(signed['status'],'final')
+        self.assertIn('browser-local demo',signed['signature']['kind'])
+        self.assertEqual(self.get('/api/hospital/studies/'+study['id'])['report']['signature'],signed['signature'])
 
 
 if __name__=='__main__':unittest.main()

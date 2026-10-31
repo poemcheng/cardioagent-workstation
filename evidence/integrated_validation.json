@@ -36,7 +36,7 @@
   "actual_onnx_runtime_contract_executed": true,
   "onnx_contract_scope": "purpose-built test graphs only; no clinical weights",
   "actual_data_analysis": "provided ACDC MRI pixels/labels and known synthetic phantom",
-  "browser_visual_qa": false,
+  "browser_visual_qa": true,
   "windows_installation_verified": false,
   "amd_hardware_verified": false,
   "clinical_accuracy_verified": false,
@@ -44,5 +44,6 @@
   "windows_legacy_crlf_fixture_tested": true,
   "public_runtime_transport_tests": 5,
   "source_asset_bootstrap_tests": 2,
-  "public_browser_execution_verified": false
+  "public_browser_execution_verified": true,
+  "public_browser_evidence": "evidence/public_browser_verification.json"
 }

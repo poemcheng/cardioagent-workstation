@@ -39,3 +39,7 @@ python scripts/analyze_samples.py
 ```
 
 開發驗證需平台相符requirements-dev.txt，DOM另需Node/jsdom。驗證器使用暫存資料；不操作既有展示者資料。Matplotlib僅用於結果圖。Windows現場另跑demo_preflight.py並保存裝置、模型、冷啟動、尖峰RAM及實際運算後端紀錄。
+
+## 公開網址實際驗收
+
+已在公開GitHub Pages以桌面Chrome執行原Python流程，非Canvas／影像替身：提供標籤75,846體素／2,412三角面、MRI閾值128的Dice0.1815、WebGL、證據圖、未保存檢核、分析覆核與報告草稿交接均已觀察。第二分頁的分析與報告為獨立工作區。完整紀錄及驗收限制見evidence/public_browser_verification.json。
