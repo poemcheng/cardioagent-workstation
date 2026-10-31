@@ -16,12 +16,14 @@
     "unchecked review confirmation leaves analysis pending",
     "checked review records approval and transfers facts to the matching report",
     "report copy,manual edit,draft save and preliminary submission execute",
-    "a second public browser tab starts without the first tab analyses or report"
+    "a second public browser tab starts without the first tab analyses or report",
+    "public export dialog generates a297.6KB JSON and its explicit native blob download link is clickable without console errors"
   ],
   "report_final_signing_in_browser": "not independently observed after browser debugger timeout",
   "browser_runtime_report_signing_test": "passed with demo attestation kind and stored revision",
-  "download_file_delivery": "not independently observed after browser debugger timeout; explicit export dialog added for retry",
+  "download_file_delivery": "explicit public export dialog and native download link verified; final local filesystem completion was not inspected",
   "amd_hardware_verified": false,
   "npu_execution_verified": false,
-  "clinical_accuracy_verified": false
+  "clinical_accuracy_verified": false,
+  "export_dialog_deployment_commit": "eaea17fa166dfff4f0e4cda274460256eaa40390"
 }

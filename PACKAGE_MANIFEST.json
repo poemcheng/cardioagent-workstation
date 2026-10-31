@@ -196,18 +196,18 @@
     },
     {
       "path": "docs/frame-loader.js",
-      "bytes": 1086,
-      "sha256": "e153a8f4bb36250bb5c928b228e8fd58cec5c99a7aa5ca935dc48aa4490861b2"
+      "bytes": 1114,
+      "sha256": "7638ebb3f883aeb9f4856d372e3081c5303f6c8c229eb36a505c09e614eaae33"
     },
     {
       "path": "docs/frame.html",
       "bytes": 277,
-      "sha256": "a109cc56379c6454257c632be24199b6eb86f1f5417023a1c567cab9ecf0ae53"
+      "sha256": "fc2825e10fd382712f1d9f96ac1b2c96df475b67232f1fc970305e57c1cd3e8c"
     },
     {
       "path": "docs/index.html",
       "bytes": 1529,
-      "sha256": "18353ee8ebd2bd64893b08c6f9c3457b271fe95e432a9e4d9b13688e4c81bbfb"
+      "sha256": "8ceb88cb7bc4f4d1b62863fe1b91fee3c5085101cc2d68a63e6306c5f870f5d0"
     },
     {
       "path": "docs/python-worker.js",
@@ -222,12 +222,12 @@
     {
       "path": "docs/shell.js",
       "bytes": 3790,
-      "sha256": "5f8c74ec30bd4ac4ccbd2b438fcc92bf51932e8abf655dae48dc69f2f45296d6"
+      "sha256": "d99d03d238e56a6e28db9271f38771a9a34cdf5a50f648de1abac1577f9176dd"
     },
     {
       "path": "docs/static/analysis.css",
-      "bytes": 7846,
-      "sha256": "107e10353c254a5ccfc2e7c38e2aa79024d61d44f34313da8c99075d721065db"
+      "bytes": 7920,
+      "sha256": "21a266e3f9cd6a12f306199e3ccf055769bda1932ab047e79046115519643f0d"
     },
     {
       "path": "docs/static/analysis.js",
@@ -341,8 +341,8 @@
     },
     {
       "path": "evidence/public_browser_verification.json",
-      "bytes": 1486,
-      "sha256": "13510757590fc590651d2ad4a9ec19ff9c29dd9c4d15cf0aedb55f37f3c9bb34"
+      "bytes": 1717,
+      "sha256": "b5ecd7ca4a4ac657baaaae4736841de910796879233d5af45f1bd35ec61a03f7"
     },
     {
       "path": "evidence/public_validation_log.txt",
@@ -491,8 +491,8 @@
     },
     {
       "path": "static/analysis.css",
-      "bytes": 7846,
-      "sha256": "107e10353c254a5ccfc2e7c38e2aa79024d61d44f34313da8c99075d721065db"
+      "bytes": 7920,
+      "sha256": "21a266e3f9cd6a12f306199e3ccf055769bda1932ab047e79046115519643f0d"
     },
     {
       "path": "static/analysis.js",
@@ -636,18 +636,18 @@
     },
     {
       "path": "web/frame-loader.js",
-      "bytes": 1086,
-      "sha256": "e153a8f4bb36250bb5c928b228e8fd58cec5c99a7aa5ca935dc48aa4490861b2"
+      "bytes": 1114,
+      "sha256": "7638ebb3f883aeb9f4856d372e3081c5303f6c8c229eb36a505c09e614eaae33"
     },
     {
       "path": "web/frame.html",
       "bytes": 277,
-      "sha256": "a109cc56379c6454257c632be24199b6eb86f1f5417023a1c567cab9ecf0ae53"
+      "sha256": "fc2825e10fd382712f1d9f96ac1b2c96df475b67232f1fc970305e57c1cd3e8c"
     },
     {
       "path": "web/index.html",
       "bytes": 1529,
-      "sha256": "18353ee8ebd2bd64893b08c6f9c3457b271fe95e432a9e4d9b13688e4c81bbfb"
+      "sha256": "8ceb88cb7bc4f4d1b62863fe1b91fee3c5085101cc2d68a63e6306c5f870f5d0"
     },
     {
       "path": "web/python-worker.js",
@@ -662,7 +662,7 @@
     {
       "path": "web/shell.js",
       "bytes": 3790,
-      "sha256": "5f8c74ec30bd4ac4ccbd2b438fcc92bf51932e8abf655dae48dc69f2f45296d6"
+      "sha256": "d99d03d238e56a6e28db9271f38771a9a34cdf5a50f648de1abac1577f9176dd"
     }
   ]
 }
