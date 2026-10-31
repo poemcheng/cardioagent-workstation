@@ -1,0 +1,12 @@
+Flask==3.1.2
+Werkzeug==3.1.9
+Jinja2==3.1.6
+MarkupSafe==3.0.4
+itsdangerous==2.2.0
+click==8.4.2
+blinker==1.9.0
+waitress==3.0.2
+numpy==2.3.5
+Pillow==13.0.0
+pydicom==3.0.1
+colorama==0.4.6; sys_platform == 'win32'

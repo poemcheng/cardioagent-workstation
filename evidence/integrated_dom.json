@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "checks": [
+    "authenticated analysis workspace defaults to real MRI inspection without invented physical volume or report transfer",
+    "explicit phantom loading adds synthetic 32-slice study with threshold120 and does not auto-run",
+    "full real pipeline returns independently matched phantom mask28736, design-volume89800mm3, Dice1 and actual surface without claiming learned detection",
+    "original, overlay and saved mask are actual authenticated PNG responses; overlay toggle preserves original source",
+    "actual mesh reaches disclosed CPU wireframe fallback and OBJ/STL downloads contain real geometry",
+    "source graph contains actual analysis nodes and interactive evidence details; language source is disclosed separately",
+    "unsaved discussion edits block review; cancelling study change, rerun, phantom load and history preserves edits without HTTP mutations",
+    "all manually completed checklist flags permit MDT discussion only, with official sources, clinician-note origin and no procedure/order",
+    "explicit checked confirmation records analysis approval, locks discussion and enables only an unsaved report transfer; full export preserves evidence",
+    "reviewed analysis opens matching hospital study, copy creates dirty edits without autosave, and explicit save creates a report draft",
+    "switching study clears prior results; MRI threshold baseline reports measured0.1815agreement with supplied labels, unknown physical spacing, and no CT inference",
+    "provided MRI labels reconstruct75846-voxel union without AI inference, physical units, or self-reference Dice",
+    "missing registered segmentation is visibly blocked, with no threshold substitution, false mask, physical volume or mesh download",
+    "case load locks execution; a delayed genuine404 restores the previous case and analysis without creating a mismatched analysis",
+    "model readiness comes from actual local APIs and preserves AMD/NPU unverified flags"
+  ],
+  "checks_count": 15,
+  "real_http": true,
+  "authenticated_session": true,
+  "fetch_responses_mocked": false,
+  "http_requests": 50,
+  "canvas": "2D recording double; WebGL unavailable",
+  "image_loading": "stubbed; actual PNG endpoints independently fetched",
+  "browser_visual_qa": false,
+  "amd_hardware_verified": false,
+  "npu_execution_verified": false,
+  "completed_at": "2026-10-31T15:00:31.754Z",
+  "errors": []
+}

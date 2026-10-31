@@ -1,0 +1,48 @@
+{
+  "schema": "cardio-validation/2",
+  "version": "2.1.0",
+  "date": "2026-10-31",
+  "environment": {
+    "os": "Linux",
+    "python": "3.12.14",
+    "versions": {
+      "Flask": "3.1.2",
+      "numpy": "2.3.5",
+      "Pillow": "13.0.0",
+      "pydicom": "3.0.1",
+      "onnx": "1.19.1",
+      "onnxruntime": "1.23.2"
+    }
+  },
+  "unit_tests": {
+    "passed": 176,
+    "failed": 0,
+    "log": "evidence/integrated_unit_tests.txt"
+  },
+  "dom_tests": {
+    "passed": 31,
+    "failed": 0,
+    "http_requests": 138,
+    "fetch_responses_mocked": false,
+    "canvas": "recording doubles",
+    "image_loading": "stubbed; actual PNG endpoints fetched separately",
+    "logs": [
+      "evidence/competition_dom.json",
+      "evidence/integrated_dom.json"
+    ]
+  },
+  "mesh_logic_checks": 6,
+  "clinical_models_or_llm_executed": false,
+  "actual_onnx_runtime_contract_executed": true,
+  "onnx_contract_scope": "purpose-built test graphs only; no clinical weights",
+  "actual_data_analysis": "provided ACDC MRI pixels/labels and known synthetic phantom",
+  "browser_visual_qa": false,
+  "windows_installation_verified": false,
+  "amd_hardware_verified": false,
+  "clinical_accuracy_verified": false,
+  "revision_integrity_regressions": 14,
+  "windows_legacy_crlf_fixture_tested": true,
+  "public_runtime_transport_tests": 5,
+  "source_asset_bootstrap_tests": 2,
+  "public_browser_execution_verified": false
+}

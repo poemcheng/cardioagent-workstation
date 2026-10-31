@@ -1,0 +1,21 @@
+{
+  "schema": "cardio-browser/1",
+  "version": "2.1.0",
+  "pyodide_version": "0.29.4",
+  "runtime_sha256": "524815b1399fd1b6afc06f9c2758634318c04ec87ab82f1c8b19192d5861e078",
+  "runtime_bytes": 4922772,
+  "wheels": [
+    "flask-3.1.2-py3-none-any.whl",
+    "werkzeug-3.1.9-py3-none-any.whl",
+    "jinja2-3.1.6-py3-none-any.whl",
+    "itsdangerous-2.2.0-py3-none-any.whl",
+    "click-8.4.2-py3-none-any.whl",
+    "blinker-1.9.0-py3-none-any.whl",
+    "pydicom-3.0.1-py3-none-any.whl"
+  ],
+  "pipeline": "original Python Flask/NumPy inside browser Web Worker",
+  "results_are_precomputed": false,
+  "data_persistence": "this_tab_only",
+  "llm_or_clinical_models_bundled": false,
+  "amd_npu_execution": false
+}

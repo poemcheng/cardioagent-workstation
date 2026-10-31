@@ -1,0 +1,37 @@
+/* Competition controls use the same restrained workstation surfaces. */
+.demo-toolbar{display:flex;align-items:center;gap:6px;min-height:37px;padding:4px 9px;background:#e1e5e8;border-bottom:1px solid #99a6af;flex-wrap:wrap}
+.demo-toolbar label{display:flex;align-items:center;gap:7px;margin:0;font-size:11px;font-weight:600}
+.demo-toolbar select{width:196px;margin:0;font-weight:400}
+.demo-toolbar button{font-size:11px}
+.demo-toolbar .runtime-label{margin-left:auto;color:#4b5860;font-size:11px}
+.demo-caption{min-height:23px;padding:4px 10px;color:#4d5b65;background:#f1f3f4;border-bottom:1px solid #b6bdc2;font-size:11px;line-height:1.4}
+.hospital-app{height:calc(100dvh - 137px)}
+.report-tabs button{font-size:11px;padding:3px 4px}
+.preparation-box{margin:8px 0;border:1px solid #b5bcc1;background:#fafafa;padding:7px}
+.preparation-box h3{padding:0 0 5px;border-bottom:1px solid #d4d8da;margin-bottom:5px}
+.preparation-check{display:grid;grid-template-columns:80px 1fr;gap:8px;padding:6px 0;border-bottom:1px solid #ddd;font-size:11px;line-height:1.5}
+.preparation-check:last-child{border-bottom:0}
+.preparation-check strong{font-weight:400;color:#43515a}
+.preparation-check[data-status=urgent],.preparation-check[data-status=blocked]{color:#8a302a}
+.preparation-check[data-status=missing],.preparation-check[data-status=pending]{color:#795c20}
+.preparation-source{padding:6px 0;border-bottom:1px solid #ddd;line-height:1.5;font-size:11px}
+.preparation-source:last-child{border-bottom:0}
+.preparation-source a{color:#244e6e}
+.preparation-source p{margin:4px 0;color:#5d6265;white-space:pre-wrap}
+.preparation-output{font-size:11px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.engine-line{font:11px/1.5 Consolas,"Microsoft JhengHei",monospace;color:#54636d;margin:6px 0;overflow-wrap:anywhere}
+.readiness-table{white-space:normal;margin:10px 0}
+.readiness-table th,.readiness-table td{padding:7px 8px;vertical-align:top;font-size:12px}
+.readiness-table th:first-child{width:130px}
+.readiness-table td:last-child{overflow-wrap:anywhere}
+.demo-guide{padding-left:22px;font-size:12px;line-height:1.7}
+.demo-guide li{margin:10px 0}
+.demo-guide strong{display:block}
+.demo-scope{background:#e4e8eb;border-left:3px solid #8b9eac;padding:7px 9px;font-size:11px;line-height:1.6;margin:8px 0}
+.busy-note{color:#4e6371;font-size:11px;margin:7px 0;white-space:pre-wrap}
+#prepareTab input[type=file]{font-size:11px}
+.source-dialog-text{white-space:pre-wrap;line-height:1.7;font-size:12px}
+@media(max-width:1000px){.demo-toolbar .runtime-label{display:none}.demo-toolbar select{width:180px}.hospital-app{height:calc(100dvh - 137px)}}
+@media(max-width:850px){.hospital-app{height:auto}.demo-caption{font-size:10px}.demo-toolbar{gap:4px}.demo-toolbar select{width:175px}.demo-toolbar label{font-size:10px}}
+@media(max-width:500px){.demo-toolbar label{width:100%}.demo-toolbar select{flex:1}.demo-toolbar button{padding:3px 6px}.readiness-table th:first-child{width:90px}}
+@media print{.demo-toolbar,.demo-caption{display:none!important}}

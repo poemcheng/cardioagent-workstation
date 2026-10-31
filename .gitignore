@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+data/
+wheelhouse/
+models/*.onnx
+models/detector.json
+assets/reference/acdc_sample.h5
+evidence/target_*.json
+
+demo_data*/
+
+integrated_demo_data*/
+assets/mri/*.npy

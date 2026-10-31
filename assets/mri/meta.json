@@ -1,0 +1,10 @@
+{
+  "description": "ACDC 預處理 HDF5 image 資料組，8 張 512×428 心臟 MRI，原值0–1線性轉0–255。另有與影像對齊的原檔提供研究label，可作來源重建或獨立重疊比照，並非模型推論；scribble未參與分析。未驗證體素間距、方向、類別解剖名稱、標註者或臨床真值，不執行CT鈣化推論。",
+  "provenance": {
+    "source_filename": "patient057_frame01.h5",
+    "source_sha256": "5edb6b44e0113765feb64fb3567f120cfa2311e2b8aa2a51814bc88dcde34860",
+    "dataset": "ACDC (as named in user Drive)",
+    "dataset_key": "image",
+    "transformation": "clip(image*255,0,255); float32; axis0 slice order retained; spacing unknown"
+  }
+}

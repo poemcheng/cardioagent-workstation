@@ -1,0 +1,8 @@
+{
+  "lemonade_url": "http://127.0.0.1:13305/v1",
+  "planner_model": "",
+  "planner_timeout_s": 45,
+  "vision_provider": "CPUExecutionProvider",
+  "confidence": 0.25,
+  "dictation_model": ""
+}

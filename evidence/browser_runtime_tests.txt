@@ -1,0 +1,10 @@
+test_guest_has_no_shared_account_or_network_service (test_browser_runtime.BrowserRuntimeTests.test_guest_has_no_shared_account_or_network_service) ... ok
+test_multipart_import_stays_inside_the_visitor_workspace (test_browser_runtime.BrowserRuntimeTests.test_multipart_import_stays_inside_the_visitor_workspace) ... ok
+test_real_mri_reference_pipeline_and_png_are_not_precomputed (test_browser_runtime.BrowserRuntimeTests.test_real_mri_reference_pipeline_and_png_are_not_precomputed) ... ok
+test_report_signature_is_labelled_as_demo_attestation (test_browser_runtime.BrowserRuntimeTests.test_report_signature_is_labelled_as_demo_attestation) ... ok
+test_visitors_have_independent_sqlite_analyses_and_csrf (test_browser_runtime.BrowserRuntimeTests.test_visitors_have_independent_sqlite_analyses_and_csrf) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.792s
+
+OK

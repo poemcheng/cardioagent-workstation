@@ -1,0 +1,102 @@
+{
+  "schema": "cardio-provided-reference-labels/1",
+  "case_id": "research-mri-01",
+  "shape_zyx": [
+    8,
+    512,
+    428
+  ],
+  "dtype": "uint8",
+  "class_values": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "foreground_values": [
+    1,
+    2,
+    3
+  ],
+  "class_counts": {
+    "0": 1677242,
+    "1": 26474,
+    "2": 25573,
+    "3": 23799
+  },
+  "union_foreground_voxels": 75846,
+  "sha256": "b85081107d715b70c3021c56ac716782d2a9a7a0bb7ce3186467639b7e4a7328",
+  "array_sha256": "bbe8b5ee2cf3840d8ad0ad10703f0d4c1f10403b0df374c3d60e01f31c487a5f",
+  "source_hdf5_sha256": "5edb6b44e0113765feb64fb3567f120cfa2311e2b8aa2a51814bc88dcde34860",
+  "source_hdf5_filename": "patient057_frame01.h5",
+  "source_dataset": "label",
+  "source_role": "provided_research_labels",
+  "image_alignment": {
+    "verified": true,
+    "method": "exact equality with clip(source image*255,0,255).astype(float32)",
+    "maximum_absolute_difference": 0.0,
+    "slices": [
+      {
+        "index": 0,
+        "asset_name": "0000.npy",
+        "file_sha256": "b1f1b53ea635b7ab4ecc6c795853933a257c458b0df3015c10e34befbc007e3f",
+        "array_sha256": "12fe2867e6607983363c1d102f80991950a08c82be6eb181c614d31878662530"
+      },
+      {
+        "index": 1,
+        "asset_name": "0001.npy",
+        "file_sha256": "4edef94481c9dd9b9320d05ecfa605985b25cfd5cef03b9cad0f935993f4bcbf",
+        "array_sha256": "17183a4fd972fc2597847f5f3261d633805dc94c2e356a4cbfef28f529156c96"
+      },
+      {
+        "index": 2,
+        "asset_name": "0002.npy",
+        "file_sha256": "e07a256bdf6387307b411dd31d6959d6790aa3c3ce09e6b9d850fe85fbfae922",
+        "array_sha256": "932b6f705c11c8f438cb7323dfadbe137778eae940daa473dc9e56a02b0be829"
+      },
+      {
+        "index": 3,
+        "asset_name": "0003.npy",
+        "file_sha256": "3ce8cb2adbc6f86863edc3d547b1da59659c53a5e362a7115d7a95cbb4aab692",
+        "array_sha256": "fa228c5210f2d5b8189e61e165eeca15f949f60e343cadd2007114ea2ce81fcd"
+      },
+      {
+        "index": 4,
+        "asset_name": "0004.npy",
+        "file_sha256": "e99afb2d609f9f167f402bb6ad73cac7eac7a174b18d4baf98eb2f380bd872f7",
+        "array_sha256": "b5cac7eb2e7d75a7b5e5b6b8462a313c2fb515899780495dfc4409e6f2c50bb0"
+      },
+      {
+        "index": 5,
+        "asset_name": "0005.npy",
+        "file_sha256": "451a81b0d4be06d8cc1b80eb5c2c2fb88fd02bd7e261c1cb61e4848fa57d1935",
+        "array_sha256": "f6c52577043510f5f31cea693d1b474724450ad228a98896cbd3be977387aa23"
+      },
+      {
+        "index": 6,
+        "asset_name": "0006.npy",
+        "file_sha256": "30f78d466f74a856f2cee7ec45d11d2a07e072104ee4213ca6906fb50666a49a",
+        "array_sha256": "84fb4e6a864c9404570e527e1021513b9674acf022ca4ee2c638b1c1ccec139e"
+      },
+      {
+        "index": 7,
+        "asset_name": "0007.npy",
+        "file_sha256": "2ea25b52b89a8dbad2349179386cf49b2c88e53d814b2b0e0ac926f73367f73b",
+        "array_sha256": "723743c0f30b1af6cce8af034669094888fcab57b234c2d486a0aea50ee77148"
+      }
+    ]
+  },
+  "scribble_non4_voxels": 13745,
+  "scribble_label_agreement_non4": 1.0,
+  "label_mapping_verified": false,
+  "class_mapping": null,
+  "annotation_authorship_verified": false,
+  "annotation_author": null,
+  "geometry_verified": false,
+  "spacing_mm": null,
+  "direction": null,
+  "units": "voxel",
+  "model": null,
+  "inference_executed": false,
+  "notice": "原始使用者研究檔案內的 label 陣列；非本系統模型輸出。類別解剖名稱、標註者、物理間距與方向未由來源檔驗證。"
+}

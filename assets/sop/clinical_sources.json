@@ -1,0 +1,41 @@
+[
+  {
+    "id": "aha-acc-scai-2021",
+    "title": "2021 ACC/AHA/SCAI 冠狀動脈血運重建指引",
+    "year": 2021,
+    "type": "clinical_practice_guideline",
+    "version": "2021；官方重點摘要更新 2021-12-09",
+    "url": "https://professional.heart.org/en/science-news/2021-acc-aha-scai-guideline-for-coronary-artery-revascularization/top-things-to-know",
+    "supporting_url": "https://professional.heart.org/-/media/PHD-Files-2/Science-News/2/2021/2021-Coronary-Artery-Revascularization-Guideline-Slide-Set.pdf",
+    "locator": "重點 2、4、10；投影片 Heart Team 與術前風險評估段落",
+    "accessed_at": "2026-10-31",
+    "summary": "血運重建決策需整合臨床適應症、解剖與治療可行性、風險及病人偏好；策略不明確時交由跨專業 Heart Team 討論。",
+    "implementation_scope": "支持討論項目與來源追溯；本系統的勾選清單不是指引分級或手術適應症演算法。"
+  },
+  {
+    "id": "esc-ccs-2024",
+    "title": "2024 ESC 慢性冠狀動脈症候群指引",
+    "year": 2024,
+    "type": "clinical_practice_guideline",
+    "version": "2024-08-30",
+    "url": "https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/chronic-coronary-syndromes/",
+    "supporting_url": "https://www.escardio.org/static-file/Escardio/Guidelines/Products/Essential%20Messages/2024%20EM/Essential%20Messages_2024%20CCS.pdf",
+    "locator": "Essential messages：非侵入性解剖與功能影像、缺血評估及血運重建",
+    "accessed_at": "2026-10-31",
+    "summary": "疑似慢性冠心病的評估使用適合的解剖或功能影像；功能影像有助於連結症狀與缺血並支援血運重建討論。鈣化候選數量不等於完整評估。",
+    "implementation_scope": "提醒需由臨床人員核對解剖、症狀與功能資料；未實作 FFR、缺血診斷或治療選擇。"
+  },
+  {
+    "id": "aha-older-adults-2025",
+    "title": "AHA 2025 高齡者冠狀動脈血運重建科學聲明",
+    "year": 2025,
+    "type": "scientific_statement",
+    "version": "2025；DOI 10.1161/CIR.0000000000001387",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12766438/",
+    "supporting_url": "https://doi.org/10.1161/CIR.0000000000001387",
+    "locator": "Abstract；Chronologic versus biologic aging；共享決策與高齡評估段落",
+    "accessed_at": "2026-10-31",
+    "summary": "高齡者評估應關注衰弱、認知、共病、功能與個人目標，採取個別化及共享決策；此文件為科學聲明，並非替代臨床實務指引。",
+    "implementation_scope": "補充風險及偏好討論，不由年齡、影像或本系統自動判定是否適合手術。"
+  }
+]

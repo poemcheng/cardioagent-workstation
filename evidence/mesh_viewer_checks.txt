@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": [
+    "valid input draws bounded finite CPU projection and preserves source coordinates/units",
+    "orthographic geometry retains scale/aspect across wide and tall viewports",
+    "nonfinite coordinates, invalid indices, duplicate indices and oversized meshes fail before rendering",
+    "CPU fallback caps sampled triangles and exposes sampling instead of claiming full surface rendering",
+    "interaction zoom is bounded; destroy removes handlers, pending draws and render data",
+    "WebGL upload has finite geometry and unit flat normals; renderer status never claims hardware inference"
+  ],
+  "checks_count": 6,
+  "visual_qa": false,
+  "contexts": "recording doubles"
+}
