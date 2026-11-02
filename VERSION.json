@@ -1,10 +1,10 @@
 {
   "name": "CardioAgent",
-  "version": "2.1.0",
-  "date": "2026-10-31",
-  "edition": "Integrated image analysis, reference comparison, 3D surface and human review workstation",
+  "version": "2.2.0",
+  "date": "2026-11-03",
+  "edition": "AMD AI PC extractive consultation handoff demo with pinned research datasets",
   "target": "Windows 11 / AMD AI PC / CPython 3.11 x64",
-  "software_tests": 176,
+  "software_tests": 189,
   "workstation_dom_checks": 16,
   "integrated_analysis_dom_checks": 15,
   "real_http_requests": 138,
@@ -25,5 +25,11 @@
   "public_browser_execution_verified": true,
   "public_url": "https://poemcheng.github.io/cardioagent-workstation/",
   "github_repository": "https://github.com/poemcheng/cardioagent-workstation",
-  "browser_visual_qa_scope": "desktop Chrome public MRI analysis,WebGL,review and report preparation"
+  "browser_visual_qa_scope": "Prior public v2.1 desktop QA only; new local AI PC workspace has HTTP/DOM checks, no rendered browser QA in this release.",
+  "aipc_dom_checks": 23,
+  "aipc_dom_real_http_requests": 18,
+  "aipc_browser_visual_qa": false,
+  "local_llm_execution_verified": false,
+  "windows_execution_verified": false,
+  "public_browser_version": "2.1.0"
 }

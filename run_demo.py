@@ -33,6 +33,7 @@ def build_parser():
     parser.add_argument("--port", type=port_number, default=8765)
     parser.add_argument("--data-dir", type=demo_directory, default=ROOT / "integrated_demo_data")
     parser.add_argument("--open-browser", action="store_true")
+    parser.add_argument("--workspace", choices=("analysis", "aipc"), default="analysis")
     return parser
 
 
@@ -64,7 +65,7 @@ def main(argv=None):
         if args.open_browser:
             import webbrowser
             try:
-                if not webbrowser.open(url + "/analysis"):
+                if not webbrowser.open(url + "/" + args.workspace):
                     print(f"Open the browser manually: {url}", flush=True)
             except Exception:
                 print(f"Open the browser manually: {url}", flush=True)

@@ -2,6 +2,8 @@
 
 **公開操作網址：[開啟工作站](https://poemcheng.github.io/cardioagent-workstation/)**
 
+**AMD AI PC 2.2 本機展示：**新增會診交談擷取、來源回查與交接缺漏檢查；已下載 MTS-Dialog 1,701 筆及建立 12 個中文合成流程案例。Windows 解壓後啟動 `start_aipc_windows.cmd`，操作與模型下載見 [AI PC 操作與驗收指南](docs/AMD_AIPC_GUIDE.md)。此功能在本機執行，公開網頁版維持原有影像流程。LLM 權重及 NPU 驅動需在目標機安裝；目前未宣稱 NPU 實測完成。
+
 沿用Flask／SQLite／NumPy、Lemonade及ONNX架構，提供來源核對、影像辨識或量測、分割、參考比對、3D表面、證據圖、人工討論與報告流程。公開版以WebAssembly在訪客瀏覽器執行原有Python程式，各分頁資料獨立，無共用病人資料庫。
 
 | 執行模式 | 資料與能力 |

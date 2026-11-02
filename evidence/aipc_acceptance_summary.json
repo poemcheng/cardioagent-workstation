@@ -1,0 +1,195 @@
+{
+  "schema": "cardio-aipc-acceptance-summary/1",
+  "version": "2.2.0",
+  "created_at": "2026-11-02T16:53:48.830230+00:00",
+  "python_tests": {
+    "passed": true,
+    "count": 189,
+    "log": "evidence/aipc_software_tests.txt"
+  },
+  "dom_checks": {
+    "passed": true,
+    "checks_count": 23,
+    "http_requests": 18,
+    "real_http": true,
+    "fetch_responses_mocked": false,
+    "browser_visual_qa": false,
+    "llm_executed": false,
+    "npu_execution_verified": false,
+    "errors": []
+  },
+  "dataset": {
+    "commit": "3ff0801933608d6f570468c13125125fb5cabdea",
+    "public_dialogues": 1701,
+    "synthetic_cases": 12,
+    "cases_sha256": "625b3f31eb22718b6cc1177191491e34cf25650fe1d33fc7c936624957f03804",
+    "duplicates": 3
+  },
+  "baseline": {
+    "attempted": 412,
+    "accepted_outputs": 412,
+    "failed_outputs": 0,
+    "section_labeled": 400,
+    "section_correct": 189,
+    "section_accuracy": 0.4725,
+    "macro_f1_supported_classes": 0.3094485708231137,
+    "per_class": {
+      "fam/sochx": {
+        "support": 92,
+        "tp": 84,
+        "fp": 52,
+        "fn": 8,
+        "f1": 0.7368421052631579
+      },
+      "genhx": {
+        "support": 90,
+        "tp": 43,
+        "fp": 54,
+        "fn": 47,
+        "f1": 0.45989304812834225
+      },
+      "pastmedicalhx": {
+        "support": 46,
+        "tp": 8,
+        "fp": 14,
+        "fn": 38,
+        "f1": 0.23529411764705882
+      },
+      "cc": {
+        "support": 24,
+        "tp": 0,
+        "fp": 1,
+        "fn": 24,
+        "f1": 0.0
+      },
+      "pastsurgical": {
+        "support": 15,
+        "tp": 11,
+        "fp": 8,
+        "fn": 4,
+        "f1": 0.6470588235294118
+      },
+      "allergy": {
+        "support": 20,
+        "tp": 18,
+        "fp": 2,
+        "fn": 2,
+        "f1": 0.9
+      },
+      "ros": {
+        "support": 27,
+        "tp": 2,
+        "fp": 2,
+        "fn": 25,
+        "f1": 0.12903225806451613
+      },
+      "medications": {
+        "support": 19,
+        "tp": 16,
+        "fp": 12,
+        "fn": 3,
+        "f1": 0.6808510638297872
+      },
+      "assessment": {
+        "support": 21,
+        "tp": 0,
+        "fp": 1,
+        "fn": 21,
+        "f1": 0.0
+      },
+      "exam": {
+        "support": 10,
+        "tp": 0,
+        "fp": 7,
+        "fn": 10,
+        "f1": 0.0
+      },
+      "diagnosis": {
+        "support": 3,
+        "tp": 0,
+        "fp": 1,
+        "fn": 3,
+        "f1": 0.0
+      },
+      "disposition": {
+        "support": 5,
+        "tp": 3,
+        "fp": 1,
+        "fn": 2,
+        "f1": 0.6666666666666666
+      },
+      "plan": {
+        "support": 8,
+        "tp": 0,
+        "fp": 4,
+        "fn": 8,
+        "f1": 0.0
+      },
+      "edcourse": {
+        "support": 5,
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "f1": 0.0
+      },
+      "immunizations": {
+        "support": 2,
+        "tp": 1,
+        "fp": 2,
+        "fn": 1,
+        "f1": 0.4
+      },
+      "imaging": {
+        "support": 3,
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "f1": 0.0
+      },
+      "gynhx": {
+        "support": 2,
+        "tp": 1,
+        "fp": 0,
+        "fn": 1,
+        "f1": 0.6666666666666666
+      },
+      "procedures": {
+        "support": 2,
+        "tp": 0,
+        "fp": 1,
+        "fn": 2,
+        "f1": 0.0
+      },
+      "other_history": {
+        "support": 4,
+        "tp": 0,
+        "fp": 47,
+        "fn": 4,
+        "f1": 0.0
+      },
+      "labs": {
+        "support": 2,
+        "tp": 2,
+        "fp": 2,
+        "fn": 0,
+        "f1": 0.6666666666666666
+      }
+    },
+    "exact_full_turn_validation_passed": 412,
+    "latency_ms": {
+      "p50": 0.07,
+      "p95": 0.2,
+      "population": "accepted outputs; includes extraction/validation, excludes file persistence"
+    },
+    "synthetic_fixture_count": 12,
+    "synthetic_missing_field_matches": 12,
+    "clinical_correctness_measured": false,
+    "ttft_measured": false,
+    "npu_execution_verified": false
+  },
+  "local_llm_executed": false,
+  "windows_execution_verified": false,
+  "npu_execution_verified": false,
+  "browser_visual_qa": false,
+  "browser_attempt": "Chromium could not start because the cloud environment disallows its local socket operation. DOM tests used real HTTP instead."
+}

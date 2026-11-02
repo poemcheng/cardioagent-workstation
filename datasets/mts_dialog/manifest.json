@@ -1,0 +1,62 @@
+{
+  "schema": "cardio-aipc-data/1",
+  "retrieved_date": "2026-11-03",
+  "source_commit": "3ff0801933608d6f570468c13125125fb5cabdea",
+  "license": "CC-BY-4.0",
+  "citation": "Ben Abacha et al. (2023), An Empirical Study of Clinical Note Generation from Doctor-Patient Encounters, EACL, 2291-2302.",
+  "citation_url": "https://aclanthology.org/2023.eacl-main.168/",
+  "files": [
+    {
+      "file": "MTS-Dialog-TrainingSet.csv",
+      "rows": 1201,
+      "bytes": 1041071,
+      "sha256": "65a28681dd59fc159681ea026e44610f2af7bc64a0e7f892d763eb03d9f503dc",
+      "git_blob_sha": "48098682fdbe5e511f250dc04b29d0812cea4648"
+    },
+    {
+      "file": "MTS-Dialog-ValidationSet.csv",
+      "rows": 100,
+      "bytes": 74054,
+      "sha256": "227206520c4534381c0d7fba6d3f09319a9af5a6d9603a93c0341af1198e3958",
+      "git_blob_sha": "6a87218334f321eda481a0845dfe13077ba1aea0"
+    },
+    {
+      "file": "MTS-Dialog-TestSet-1-MEDIQA-Chat-2023.csv",
+      "rows": 200,
+      "bytes": 162806,
+      "sha256": "b4d38dd2c99b2e9860099abcf653f1e0f3e9b69f9fcc45be2a2699b37a4d2f37",
+      "git_blob_sha": "e9fa1cba6504841277570ec96e750c6708aaf7c7"
+    },
+    {
+      "file": "MTS-Dialog-TestSet-2-MEDIQA-Sum-2023.csv",
+      "rows": 200,
+      "bytes": 171558,
+      "sha256": "226644466ed3af82382b327a3e684aab70aa605b96cfd93b04f584f1826ab1a6",
+      "git_blob_sha": "fd004f83d5b17fa61e5c96da9e07800c1743798d"
+    }
+  ],
+  "public_dialogues": 1701,
+  "synthetic_cases": 12,
+  "cases_sha256": "625b3f31eb22718b6cc1177191491e34cf25650fe1d33fc7c936624957f03804",
+  "normalized_dialogue_duplicates": [
+    {
+      "first": "mts-train-0901",
+      "repeat": "mts-train-0989",
+      "cross_split": false
+    },
+    {
+      "first": "mts-train-0256",
+      "repeat": "mts-train-1109",
+      "cross_split": false
+    },
+    {
+      "first": "mts-test_2-0059",
+      "repeat": "mts-test_2-0153",
+      "cross_split": false
+    }
+  ],
+  "patient_independence_verified": false,
+  "cross_modal_pairing_available": false,
+  "gold_not_in_model_input": true,
+  "notice": "原始官方切分保留；只作研究文字與部署驗證，不是中文心臟專科臨床驗證。MRI與文字沒有病人配對。"
+}

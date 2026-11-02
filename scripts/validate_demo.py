@@ -49,7 +49,7 @@ def main():
 
 
 def run_dom(node, env, evidence, script):
-    prefix = 'integrated_dom' if script.startswith('integrated') else 'competition_dom'
+    prefix = 'aipc_browser' if script.startswith('aipc_') else 'integrated_dom' if script.startswith('integrated') else 'competition_dom'
     with socket.socket() as sock:
         sock.bind(('127.0.0.1', 0))
         port = sock.getsockname()[1]

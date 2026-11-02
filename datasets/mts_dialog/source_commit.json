@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/abachaa/MTS-Dialog",
+  "commit": "3ff0801933608d6f570468c13125125fb5cabdea",
+  "files": [
+    {
+      "file": "MTS-Dialog-TestSet-1-MEDIQA-Chat-2023.csv",
+      "bytes": 162806,
+      "git_blob_sha": "e9fa1cba6504841277570ec96e750c6708aaf7c7"
+    },
+    {
+      "file": "MTS-Dialog-TestSet-2-MEDIQA-Sum-2023.csv",
+      "bytes": 171558,
+      "git_blob_sha": "fd004f83d5b17fa61e5c96da9e07800c1743798d"
+    },
+    {
+      "file": "MTS-Dialog-TrainingSet.csv",
+      "bytes": 1041071,
+      "git_blob_sha": "48098682fdbe5e511f250dc04b29d0812cea4648"
+    },
+    {
+      "file": "MTS-Dialog-ValidationSet.csv",
+      "bytes": 74054,
+      "git_blob_sha": "6a87218334f321eda481a0845dfe13077ba1aea0"
+    }
+  ],
+  "license": "CC-BY-4.0",
+  "retrieved_date": "2026-11-03"
+}

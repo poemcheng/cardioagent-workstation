@@ -1,18 +1,23 @@
 {
   "schema": "cardio-package/2",
-  "version": "2.1.0",
-  "date": "2026-10-31",
-  "scope": "public GitHub source and browser build; arrays restored from verified runtime archive",
+  "version": "2.2.0",
+  "date": "2026-11-03",
+  "scope": "GitHub source files; generated cases and offline distribution additions are checked by their separate manifests",
   "files": [
     {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
       "path": ".gitignore",
-      "bytes": 182,
-      "sha256": "ab1e5e75c57bc26fcdba9b622c410f623b20f65978723b643848c2abbc3cca4d"
+      "bytes": 243,
+      "sha256": "9a3036a91cb08a8a04cb1b1e150a6df189173c8261657b33887264a5e72bb118"
     },
     {
       "path": "README.md",
-      "bytes": 1696,
-      "sha256": "44ef5cb6d91e5ca005826aa57abec8a0b881103066845230bdbf5dffc2573c8a"
+      "bytes": 2151,
+      "sha256": "ef8dc2e834e11a4d274729fcf10722cbe6e392b42a9563afa43da1503939cb91"
     },
     {
       "path": "README_zh-TW.md",
@@ -21,8 +26,8 @@
     },
     {
       "path": "VERSION.json",
-      "bytes": 1205,
-      "sha256": "4a81e715aacc3d652e5df48283b2e324cd47ba7fc3ec2a57c760003e18bca099"
+      "bytes": 1458,
+      "sha256": "42ef64f1a6d1622e088a906461b91707b6cc92175e329847e40d7c11cb5f1590"
     },
     {
       "path": "assets/mri/meta.json",
@@ -55,14 +60,19 @@
       "sha256": "aaccd5858affce6955d19e2a79ecd4a3f9608775e610d38bbc5a605c0a0f7fb7"
     },
     {
+      "path": "cardio/aipc.py",
+      "bytes": 12665,
+      "sha256": "341702b6ff9db403e9268060b3a7a4802a80b231d573f18147ee104face6e01d"
+    },
+    {
       "path": "cardio/analysis.py",
       "bytes": 44619,
       "sha256": "446814d0fd55161f61a20f43a0fb987e245ccb5c9d503627bb8ebef6ee13c378"
     },
     {
       "path": "cardio/app.py",
-      "bytes": 15822,
-      "sha256": "391a373fd5e3f6d281876dbea5816b2135e417055a4082c35e363194a052e69f"
+      "bytes": 15937,
+      "sha256": "28bf0697e96cd1cd36368e15db0b648073ad8a547dfb136096d3941142c5c4aa"
     },
     {
       "path": "cardio/auth.py",
@@ -140,14 +150,64 @@
       "sha256": "1a29f7e9321e1c402fdc923d9d89fcca1260fe53c86ab73fd6a6bde20edbb804"
     },
     {
+      "path": "datasets/mts_dialog/UPSTREAM_README.md",
+      "bytes": 4969,
+      "sha256": "a43a4e305d5e7d04b50767dcdc99f198f4791781b02b63b3e07a729185e5f4a3"
+    },
+    {
+      "path": "datasets/mts_dialog/manifest.json",
+      "bytes": 2180,
+      "sha256": "bccbafa9030d15570d32d28c17ab782a337bb4491be6b804c2e1fd4ee90a3e25"
+    },
+    {
+      "path": "datasets/mts_dialog/raw/LICENSE.txt",
+      "bytes": 16391,
+      "sha256": "5b63c5abb5f4218f79230730b3733ce681383e2d656044069b8c73cbdb8e7fb7"
+    },
+    {
+      "path": "datasets/mts_dialog/raw/MTS-Dialog-TestSet-1-MEDIQA-Chat-2023.csv",
+      "bytes": 162806,
+      "sha256": "b4d38dd2c99b2e9860099abcf653f1e0f3e9b69f9fcc45be2a2699b37a4d2f37"
+    },
+    {
+      "path": "datasets/mts_dialog/raw/MTS-Dialog-TestSet-2-MEDIQA-Sum-2023.csv",
+      "bytes": 171558,
+      "sha256": "226644466ed3af82382b327a3e684aab70aa605b96cfd93b04f584f1826ab1a6"
+    },
+    {
+      "path": "datasets/mts_dialog/raw/MTS-Dialog-TrainingSet.csv",
+      "bytes": 1041071,
+      "sha256": "65a28681dd59fc159681ea026e44610f2af7bc64a0e7f892d763eb03d9f503dc"
+    },
+    {
+      "path": "datasets/mts_dialog/raw/MTS-Dialog-ValidationSet.csv",
+      "bytes": 74054,
+      "sha256": "227206520c4534381c0d7fba6d3f09319a9af5a6d9603a93c0341af1198e3958"
+    },
+    {
+      "path": "datasets/mts_dialog/source_commit.json",
+      "bytes": 804,
+      "sha256": "c4a2a66847f413ab3d1162d0d16f6ff6e259cc116dfd4c6845e5b4668fd850ca"
+    },
+    {
       "path": "docs/.nojekyll",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "docs/AMD_AIPC_GUIDE.md",
+      "bytes": 11890,
+      "sha256": "1dc39d84e202d1323089699908991d00758cc8541ce508dfeca180b8d0b62287"
+    },
+    {
       "path": "docs/CLINICAL_SCOPE.md",
       "bytes": 3738,
       "sha256": "de961edd57ce301399962ddeb286915e4c0a413d93f484c70ccaece6ecdadbec"
+    },
+    {
+      "path": "docs/CardioAgent_AMD_AIPC_Guide_v2.2_20261103.pdf",
+      "bytes": 131943,
+      "sha256": "ad4ff1ff22455cc60b1777af690e16c2de819beac242578e30b1e07ab13ab451"
     },
     {
       "path": "docs/HOSPITAL_WORKFLOW.md",
@@ -310,6 +370,36 @@
       "sha256": "6392e50c78460ba618e5b21f08a71f59c99ce99cdc6cf6e3dd7e6ccca8754fab"
     },
     {
+      "path": "evidence/aipc_acceptance_summary.json",
+      "bytes": 4250,
+      "sha256": "136f4bd751a84886099cd8fb9e3132d09094df4bc490de649640a9ddf30a85b3"
+    },
+    {
+      "path": "evidence/aipc_baseline_results.json",
+      "bytes": 228970,
+      "sha256": "1ed8e71d1e8618296ee5b1e616cf4401275fb1509e6369eb63ed83344f9c71bc"
+    },
+    {
+      "path": "evidence/aipc_baseline_summary.txt",
+      "bytes": 2885,
+      "sha256": "d72bdad9219a09a0544c80cdd1a28e5e5a649a01efc9f6fc7a4eeadb422e4e3d"
+    },
+    {
+      "path": "evidence/aipc_cloud_preflight.json",
+      "bytes": 873,
+      "sha256": "26b3e3ed00e2891c382f581bc644b31603f4259af455c25061c9f7fe752bffcb"
+    },
+    {
+      "path": "evidence/aipc_dom_results.json",
+      "bytes": 227,
+      "sha256": "10e83eda1060a3a50d9e50d10357d7ee88c097838f4c8065daaef8767635818d"
+    },
+    {
+      "path": "evidence/aipc_software_tests.txt",
+      "bytes": 29321,
+      "sha256": "20f772ba8eb95543a2a37b23a7ff4c726d53a9c3e6d3111e053fa70e0df23ef9"
+    },
+    {
       "path": "evidence/browser_runtime_tests.txt",
       "bytes": 908,
       "sha256": "3c830d7972031e42fb798c076b6996a50c7e940dde37426d5b31e35e4adc3471"
@@ -381,8 +471,23 @@
     },
     {
       "path": "run_demo.py",
-      "bytes": 3548,
-      "sha256": "aab28d07dedb414df2b5286f54825e25fa1611541e62edcb572b62189f426076"
+      "bytes": 3646,
+      "sha256": "1249aa314e1ba781b5d38cdb1bcf12c4b3b1a1a8935601516f00204d91c375f3"
+    },
+    {
+      "path": "scripts/aipc_browser_check.cjs",
+      "bytes": 5352,
+      "sha256": "d2fda089dc5fbad9f8fb21b252e9bf0c1e05c83a9b2354d7c4a08681ac2f8c5b"
+    },
+    {
+      "path": "scripts/aipc_dom_smoke.cjs",
+      "bytes": 5073,
+      "sha256": "95d1658d715cd9e37c187e432cdd4150e5752a250803a0f295565f7948ba13ef"
+    },
+    {
+      "path": "scripts/aipc_preflight.py",
+      "bytes": 3315,
+      "sha256": "e1e27212b2ae61b17c6f5aba48c4969bb9ea384ba8bc2031095bfe0d8ffb2043"
     },
     {
       "path": "scripts/analyze_samples.py",
@@ -395,9 +500,19 @@
       "sha256": "d677482d5d961f3b3ce2ff9299c7733ce8db105e2faef90588b55a7dd6f55364"
     },
     {
+      "path": "scripts/build_aipc_guide.py",
+      "bytes": 5627,
+      "sha256": "5c891392ceff0513e5f1d94ea09f41ecded9912dfb0ba18a0d607a5f2b3f929a"
+    },
+    {
       "path": "scripts/build_public.py",
       "bytes": 3044,
       "sha256": "b73ade25a74625f1fad8d2ce4691a8e4c42ef270bcbdf39afd3a5188b2e87e26"
+    },
+    {
+      "path": "scripts/collect_aipc_evidence.ps1",
+      "bytes": 1897,
+      "sha256": "96ccd16894590da68f1bc84f28f45f2530463aa48d081843ef97f3facd56b8f9"
     },
     {
       "path": "scripts/competition_dom_smoke.cjs",
@@ -425,6 +540,11 @@
       "sha256": "bd528a3b94fdb5ab8346fde9cf30b3f5f58b722f5dae959e280d67635f08edf0"
     },
     {
+      "path": "scripts/evaluate_aipc.py",
+      "bytes": 5690,
+      "sha256": "55c952b33f44f41742965cfd4874ad122a24ade3cd15947b6fde3c09f688bab3"
+    },
+    {
       "path": "scripts/hospital_smoke.py",
       "bytes": 871,
       "sha256": "77c09580348314d81d86aff5de7f6cc3b15d5316d6f8a1d4abdcb97f72b1fb74"
@@ -445,6 +565,11 @@
       "sha256": "01eaa35ff6d53af5fc34726803eacd1df1e1be0a43ea6d901bdcfa3a2e7b215a"
     },
     {
+      "path": "scripts/prepare_aipc_data.py",
+      "bytes": 5483,
+      "sha256": "04afc0be948d432289ea8f09aadd6d704774d37a3ce108aa224123c7923140e8"
+    },
+    {
       "path": "scripts/prepare_demo_assets.py",
       "bytes": 393,
       "sha256": "15f7f955885d2f515502041ef426b58219994adba7b8b22be7ea191c035dd116"
@@ -460,9 +585,14 @@
       "sha256": "35a5b85bf509fc435764a338b8cda132658722282e715db3914ff71c38ed4ccb"
     },
     {
+      "path": "scripts/setup_aipc.ps1",
+      "bytes": 1359,
+      "sha256": "8a6f2066d3046ebb7bdf95ab00622e79cf9ad84a739ee88ae9f3cb4f6b57083a"
+    },
+    {
       "path": "scripts/validate_demo.py",
-      "bytes": 4077,
-      "sha256": "3423d3952fdc1a4afb5a71dec2883a657257d35baae76f29fe60e0fb04f5f380"
+      "bytes": 4127,
+      "sha256": "a517c7e53324838cbaae351e665f99542435f1572c3dfde3e19f7c601e6a5cf0"
     },
     {
       "path": "scripts/verify_package.py",
@@ -473,6 +603,11 @@
       "path": "setup_windows.ps1",
       "bytes": 897,
       "sha256": "5e0da6502d48655d12f83596e6816b018aa483c04412388bd94b5fb052a1a960"
+    },
+    {
+      "path": "start_aipc_windows.cmd",
+      "bytes": 1170,
+      "sha256": "a57438dcb84835ad22894e7622bf1a243f87e0f202abb0b04e8ec9a3beb1b791"
     },
     {
       "path": "start_demo_linux.sh",
@@ -488,6 +623,16 @@
       "path": "start_windows.cmd",
       "bytes": 179,
       "sha256": "9fb69788736c2c3ac80f0958c2d2a55ecc2f6cfc3c34300458079f4360bd0bb1"
+    },
+    {
+      "path": "static/aipc.css",
+      "bytes": 2343,
+      "sha256": "4fc38e85a88060a8a0de49d56cf1192eadda1a56efe332e776b943a1d5bc7d6f"
+    },
+    {
+      "path": "static/aipc.js",
+      "bytes": 6808,
+      "sha256": "a3af87690a2264cd085ba3ead7177b4b2244e18427464cf69f28cc25bb677777"
     },
     {
       "path": "static/analysis.css",
@@ -526,8 +671,8 @@
     },
     {
       "path": "static/login.js",
-      "bytes": 822,
-      "sha256": "40423f3ae7c6cf7afbb6129b17ba1fea1fc524dbf9e8f931c7e6671f7bcf7a01"
+      "bytes": 852,
+      "sha256": "04d59df583883a3aabd2ec58180819e280ce14634eda3f479202523b0b8ad07d"
     },
     {
       "path": "static/mesh_viewer.js",
@@ -538,6 +683,11 @@
       "path": "static/style.css",
       "bytes": 9167,
       "sha256": "b36a3ab959b3214747a6c85a999a5b8335df64fa390fb8685ff62e5dedf3afd5"
+    },
+    {
+      "path": "templates/aipc.html",
+      "bytes": 2937,
+      "sha256": "bc272aa1b8ed67f75905914130c4de05fe90f62bac20f1e1d5cdfe5d845f1fd6"
     },
     {
       "path": "templates/analysis.html",
@@ -558,6 +708,11 @@
       "path": "templates/research.html",
       "bytes": 7252,
       "sha256": "e76d9ae7425e47137bd7876102101d9456bfc3ebe95900cbbca4dfc32906139e"
+    },
+    {
+      "path": "tests/test_aipc.py",
+      "bytes": 8952,
+      "sha256": "c3abd1c471d8f884bbdc1e5bd49796d562b9241543a4dd8eee7048682dce9079"
     },
     {
       "path": "tests/test_analysis.py",

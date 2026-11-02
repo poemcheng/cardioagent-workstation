@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks_count": 23,
+  "http_requests": 18,
+  "real_http": true,
+  "fetch_responses_mocked": false,
+  "browser_visual_qa": false,
+  "llm_executed": false,
+  "npu_execution_verified": false,
+  "errors": []
+}

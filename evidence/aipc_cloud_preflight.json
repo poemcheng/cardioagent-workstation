@@ -1,0 +1,29 @@
+{
+  "schema": "cardio-aipc-preflight/1",
+  "created_at": "2026-11-02T16:49:54.269985+00:00",
+  "host": {
+    "os": "Linux",
+    "os_release": "6.18.57",
+    "architecture": "x86_64"
+  },
+  "dataset_verified": true,
+  "public_dialogues": 1701,
+  "synthetic_cases": 12,
+  "baseline_ready": true,
+  "local_llm_ready": false,
+  "selected_model": "qwen3.5-4b-FLM",
+  "models": [],
+  "npu_execution_verified": false,
+  "model_weights_bundled": false,
+  "probe_errors": [
+    {
+      "endpoint": "http://127.0.0.1:13305/v1",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "endpoint": "http://127.0.0.1:13305/api/v1",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    }
+  ],
+  "next_step": "Start Lemonade, enable FLM and download the selected model. The explicit CPU rule baseline is available when baseline_ready is true."
+}

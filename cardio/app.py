@@ -324,4 +324,6 @@ def create_app(data_dir=None, synchronous=False, recover_interrupted=True, acces
 
     from .integration_routes import register_analysis_routes
     register_analysis_routes(app, ROOT, data, store, detector, planner, hospital, current_user, actions)
+    from .aipc import register_aipc_routes
+    register_aipc_routes(app, ROOT, data, store, planner, current_user)
     return app
