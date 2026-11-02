@@ -4,6 +4,8 @@
 
 **AMD AI PC 2.2 本機展示：**新增會診交談擷取、來源回查與交接缺漏檢查；已下載 MTS-Dialog 1,701 筆及建立 12 個中文合成流程案例。Windows 解壓後啟動 `start_aipc_windows.cmd`，操作與模型下載見 [AI PC 操作與驗收指南](docs/AMD_AIPC_GUIDE.md)。此功能在本機執行，公開網頁版維持原有影像流程。LLM 權重及 NPU 驅動需在目標機安裝；目前未宣稱 NPU 實測完成。
 
+**2026-11-03 競賽資源核對修正：**預設模型改為 `Phi-4-mini-instruct-GGUF`（Microsoft Phi 基礎模型，MIT；GGUF 來自 Unsloth），屬 CPU／GPU 路徑。若兼報開源 AI 模型應用組，須遵守核心模型來源限制，不能直接沿用前版 Qwen 預設。Joint Lab 申請表目前已停止收件；八項資源用途、Hybrid 版本限制及尚待驗證項目見 [競賽資源核對表](docs/AMD_COMPETITION_RESOURCE_AUDIT.md)。先前下載包亦可用 `scripts\setup_aipc.ps1 -PullModel -Model Phi-4-mini-instruct-GGUF` 明確指定模型；先前 PDF 的 Qwen／FLM 預設說明以本次線上指南修正為準。
+
 沿用Flask／SQLite／NumPy、Lemonade及ONNX架構，提供來源核對、影像辨識或量測、分割、參考比對、3D表面、證據圖、人工討論與報告流程。公開版以WebAssembly在訪客瀏覽器執行原有Python程式，各分頁資料獨立，無共用病人資料庫。
 
 | 執行模式 | 資料與能力 |

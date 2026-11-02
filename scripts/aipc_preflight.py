@@ -12,7 +12,7 @@ sys.path.insert(0,str(ROOT))
 from cardio.planner import Planner
 
 
-def check(configure=False,model_id='qwen3.5-4b-FLM'):
+def check(configure=False,model_id='Phi-4-mini-instruct-GGUF'):
     path=ROOT/'datasets/mts_dialog/manifest.json';cases=path.with_name('cases.jsonl')
     manifest=json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
     ready=cases.is_file() and hashlib.sha256(cases.read_bytes()).hexdigest()==manifest.get('cases_sha256')
@@ -36,13 +36,13 @@ def check(configure=False,model_id='qwen3.5-4b-FLM'):
                 report['configuration_saved']=True
             break
         except Exception as exc:report['probe_errors'].append({'endpoint':endpoint,'error':str(exc)[:200]})
-    report['next_step']='Run the local model and collect target-device evidence.' if report['local_llm_ready'] else 'Start Lemonade, enable FLM and download the selected model. The explicit CPU rule baseline is available when baseline_ready is true.'
+    report['next_step']='Run the local model and collect target-device evidence. GGUF is a CPU/GPU path, not NPU proof.' if report['local_llm_ready'] else 'Start Lemonade and download the selected model with its matching backend. The explicit CPU rule baseline is available when baseline_ready is true.'
     return report
 
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--configure',action='store_true');parser.add_argument('--model',default='qwen3.5-4b-FLM')
+    parser.add_argument('--configure',action='store_true');parser.add_argument('--model',default='Phi-4-mini-instruct-GGUF')
     parser.add_argument('--output',type=Path,default=ROOT/'evidence/aipc_preflight.json')
     args=parser.parse_args(argv);result=check(args.configure,args.model)
     args.output.parent.mkdir(parents=True,exist_ok=True)

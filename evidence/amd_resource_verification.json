@@ -1,0 +1,46 @@
+{
+  "schema": "cardio-competition-resource-audit/1",
+  "checked_date": "2026-11-03",
+  "timezone": "Asia/Taipei",
+  "official_rules": "https://innoserveawards.tca.org.tw/advertise26_AMD.htm",
+  "general_rules": "https://innoserve.tca.org.tw/Rules/Detail?category=College",
+  "all_eight_tools_required": false,
+  "npu_explicitly_mandatory_in_amd_group": false,
+  "amd_resource_actual_execution_required": true,
+  "joint_lab_form": {
+    "accepting_responses": false,
+    "method": "visible Chrome DOM",
+    "title": "2026 AMD group Joint Lab compute resource application",
+    "observed_text": "表單已不接受回覆",
+    "url": "https://docs.google.com/forms/d/e/1FAIpQLSfNv1PccvHMh-8e6becPCo9sVZjYGnr44NzYe-ehQI-PmqBYA/closedform"
+  },
+  "cloud_workshop": {
+    "source": "https://github.com/AMD-AI-Agent-Online-Hackthon/Documents/blob/main/workshop.md",
+    "advertised_model": "gpt-oss-120b",
+    "service_liveness_verified": false,
+    "quota_verified": false,
+    "not_a_local_npu_runtime": true
+  },
+  "text_model": {
+    "default_id": "Phi-4-mini-instruct-GGUF",
+    "base_publisher": "Microsoft",
+    "base_source": "https://huggingface.co/microsoft/Phi-4-mini-instruct",
+    "conversion_publisher": "Unsloth",
+    "conversion_source": "https://huggingface.co/unsloth/Phi-4-mini-instruct-GGUF",
+    "license_declared_by_both_cards": "MIT",
+    "catalog_git_blob_sha": "bd5cc5788fe8bac1c366ab4320b680fcaf2340e2",
+    "catalog_checkpoint": "unsloth/Phi-4-mini-instruct-GGUF:Phi-4-mini-instruct-Q4_K_M.gguf",
+    "catalog_size_gb": 2.49,
+    "recipe": "llamacpp",
+    "weight_downloaded_here": false,
+    "device_execution_verified": false,
+    "task_quality_verified": false
+  },
+  "regression_tests": {
+    "passed": true,
+    "count": 189,
+    "log": "evidence/competition_resource_revision_tests.txt"
+  },
+  "final_competition_eligibility_verified": false,
+  "source_notes": "Resource list is interpreted as alternatives from official prose. Open Source model restrictions and per-category registration limits apply according to actual entered group. No application submitted and no remote inference performed."
+}

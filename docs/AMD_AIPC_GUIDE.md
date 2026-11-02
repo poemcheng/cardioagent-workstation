@@ -1,6 +1,6 @@
 # CardioAgent 2.2：AMD AI PC 會診交接展示
 
-版本：2.2.0 / 2026-11-03。定位：可執行的研究與競賽展示。入口是 `start_aipc_windows.cmd`；原有影像、3D、人工覆核與報告工作站保留。
+版本：2.2.0 / 2026-11-03（競賽資源核對修正）。定位：可執行的研究與競賽展示。入口是 `start_aipc_windows.cmd`；原有影像、3D、人工覆核與報告工作站保留。
 
 ## 1. 這次處理的醫療流程痛點
 
@@ -21,11 +21,12 @@
 | 元件 | 本版本工作 | 證據邊界 |
 |---|---|---|
 | CPU / Python | 資料解析、雜湊、來源核對、結構缺漏規則、影像幾何與量測 | CPU 規則基線不是語言模型 |
-| NPU 候選路徑 | Lemonade + FLM + `qwen3.5-4b-FLM` 的本機文字推論 | 必須在目標機下載、實跑並保留 runtime / 裝置證據 |
+| 本機文字預設 | Lemonade + `Phi-4-mini-instruct-GGUF` | CPU/GPU 路徑；實際 backend 需實測，不能稱 NPU |
+| NPU 候選路徑 | 來源已核對且匹配 runtime 的 Phi Hybrid / NPU 模型 | 必須在目標機下載、實跑並保留裝置證據；版本不能混用 |
 | iGPU / WebGL | 原有影像與 3D 互動顯示；另可評估支援模型的 GPU 推論 | DirectML 是 GPU 路徑，不能稱為 NPU |
 | 瀏覽器與 SQLite | 本機登入、交談閱覽、摘錄回查、人工覆核、紀錄保存 | 工作站只監聽 127.0.0.1；不是院內正式 HIS/PACS 連線 |
 
-AMD 官方目前列出 FLM 的小型 NPU 模型，以及 NPU + iGPU 的混合路徑。[2][3] 16 GB 先採單一 4B 模型、單次一個請求；不要同時載入大型文字、視覺及語音模型。選單只接受模型服務宣告已下載、用途相符且無雲端路由的模型。Recipe 只代表配置，不是逐請求的硬體證明。
+競賽預設改用 Microsoft Phi 基礎模型，原始與 GGUF 模型卡均標示 MIT；另保留 AMD NPU + iGPU 的混合路徑。若兼報開源 AI 模型組，須遵守該組核心模型來源限制；詳見 [競賽資源核對表](AMD_COMPETITION_RESOURCE_AUDIT.md)。AMD 官方另列 FLM 與 OGA 路徑。[2][3] 16 GB 先採單一 4B 模型、單次一個請求；不要同時載入大型文字、視覺及語音模型。選單只接受模型服務宣告已下載、用途相符且無雲端路由的模型。Recipe 只代表配置，不是逐請求的硬體證明。
 
 文字模型在此做「段落分類與整行原文擷取」，不補寫未提供的數值，不開立醫囑，不決定手術。沒有可用 LLM 時，只有使用者明確點選的規則基線；模型失敗不會被規則結果冒充。
 
@@ -49,14 +50,14 @@ MTS 標註答案僅供離線評估，在模型請求與病例 API 中移除。�
 
 1. 解壓完整 DemoKit 到一般使用者可寫入的資料夾，例如 `C:\CardioAgent`。先安裝 Python 3.11 x64 與 Python launcher。套件包含核心依賴的 Windows wheels，沒有包含 Python 安裝程式、LLM 權重或 AMD 驅動。
 2. 雙擊 `start_aipc_windows.cmd`。它會建立虛擬環境、核對資料並啟動 `http://127.0.0.1:8765/aipc`。第一次建立自己的本機帳號；沒有預設帳密。沒有模型時先確認規則基線與缺漏流程。
-3. 從官方網站安裝 Lemonade，依官方條件完成 Ryzen AI / NPU 驅動。開啟 Lemonade Backends Manager，安裝並啟用 FLM。不要假設安裝 Lemonade 就已具備 FLM 或相容 NPU。[2][3]
+3. 從官方網站安裝 Lemonade，依官方條件完成 Ryzen AI / NPU 驅動。預設 GGUF 使用 llama.cpp backend；選擇 Hybrid 或 NPU 模型時，另依官方文件安裝匹配的 runtime。不要把 GGUF 當作 NPU 推論。[2][3]
 4. 啟動 Lemonade，於專案根目錄執行下列命令。第一次需要網路下載模型；下載完的展示可在停用外網後重跑。這一步不會更動 BIOS 或電源策略。
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\setup_aipc.ps1 -PullModel
 ```
 
-等價的模型下載核心命令為 `lemonade pull qwen3.5-4b-FLM`。[2][5] 若官方模型目錄更新或該硬體不支援，使用官方可用模型 ID，明確記錄實際 ID / recipe，不能用 CPU 備援宣稱 NPU 成功。
+等價的模型下載核心命令為 `lemonade pull Phi-4-mini-instruct-GGUF`；模型卡與來源見競賽核對表。[5] 若官方模型目錄更新或該硬體不支援，使用官方可用模型 ID，明確記錄實際 ID / recipe，不能用 CPU 備援宣稱 NPU 成功。
 
 5. 回到畫面按「重新檢查模型」，選已下載的本機模型，按「本機 LLM 擷取」。匯出 JSON 的 `engine.source` 應為 `lemonade_local_model`，並保留實際模型 ID、recipe、usage 與耗時。選 `synthetic-07` 時會直接顯示急性旗標優先，這次刻意不呼叫模型。
 
@@ -86,9 +87,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\setup_aipc.ps1 -Pull
 先收集目標機硬體與驅動，再執行固定輸入的模型評估：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\collect_aipc_evidence.ps1 -ValidateFLM
-.\.venv\Scripts\python.exe scripts\evaluate_aipc.py --mode llm --model qwen3.5-4b-FLM --split test_1 --output evidence\aipc_llm_test1.json
-lemonade bench --json --output evidence\lemonade_bench.json qwen3.5-4b-FLM
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\collect_aipc_evidence.ps1
+.\.venv\Scripts\python.exe scripts\evaluate_aipc.py --mode llm --model Phi-4-mini-instruct-GGUF --split test_1 --output evidence\aipc_llm_test1.json
+lemonade bench --json --output evidence\lemonade_bench.json Phi-4-mini-instruct-GGUF
 ```
 
 先以 `--limit 10` 彩排，再跑完整測試組。評估程式在推論後才讀 gold，將失敗/不合格式輸出保留在分母，記錄各類支持數、分類準確率、macro F1、成功輸出的 p50/p95 耗時及失敗原因。此 API 沒有串流，所以不報 TTFT。`lemonade bench` 是另一個微基準，不等於應用任務耗時。[5]

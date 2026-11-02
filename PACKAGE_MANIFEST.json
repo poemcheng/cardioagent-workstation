@@ -16,8 +16,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2151,
-      "sha256": "ef8dc2e834e11a4d274729fcf10722cbe6e392b42a9563afa43da1503939cb91"
+      "bytes": 2800,
+      "sha256": "87e3c14e82a31ee38b22f297d65580499b97cbeabeda968ab3b1b90da69cd0c0"
     },
     {
       "path": "README_zh-TW.md",
@@ -26,8 +26,8 @@
     },
     {
       "path": "VERSION.json",
-      "bytes": 1458,
-      "sha256": "42ef64f1a6d1622e088a906461b91707b6cc92175e329847e40d7c11cb5f1590"
+      "bytes": 1606,
+      "sha256": "df26d1639ea1ea6f4f82bc539595b52f2a2ba016347eef45eb42089770b9fdca"
     },
     {
       "path": "assets/mri/meta.json",
@@ -196,8 +196,13 @@
     },
     {
       "path": "docs/AMD_AIPC_GUIDE.md",
-      "bytes": 11890,
-      "sha256": "1dc39d84e202d1323089699908991d00758cc8541ce508dfeca180b8d0b62287"
+      "bytes": 12369,
+      "sha256": "b01c03663f1c9cebb3b13a13473534e16f031281e887189fb6c0ad0b721ab73a"
+    },
+    {
+      "path": "docs/AMD_COMPETITION_RESOURCE_AUDIT.md",
+      "bytes": 8404,
+      "sha256": "eaa47cf17c4416e8f03db66f14239c44c8b5727ef96e6fa04305466578c9cbd3"
     },
     {
       "path": "docs/CLINICAL_SCOPE.md",
@@ -400,6 +405,11 @@
       "sha256": "20f772ba8eb95543a2a37b23a7ff4c726d53a9c3e6d3111e053fa70e0df23ef9"
     },
     {
+      "path": "evidence/amd_resource_verification.json",
+      "bytes": 2127,
+      "sha256": "6cd00696e5bce15386133acb64b2dd059702e0a9de9f3fd71301275789fd3df8"
+    },
+    {
       "path": "evidence/browser_runtime_tests.txt",
       "bytes": 908,
       "sha256": "3c830d7972031e42fb798c076b6996a50c7e940dde37426d5b31e35e4adc3471"
@@ -408,6 +418,11 @@
       "path": "evidence/competition_dom.json",
       "bytes": 1874,
       "sha256": "394b194482ec0c34a15f7c13a0ee77f9cb1177a1ccb26d030b85a774c024ab0f"
+    },
+    {
+      "path": "evidence/competition_resource_revision_tests.txt",
+      "bytes": 29321,
+      "sha256": "02345bd2561d54ff5777b4857e92de0999534bbf1f1f90380b6d2e194a4dee4f"
     },
     {
       "path": "evidence/integrated_dom.json",
@@ -486,8 +501,8 @@
     },
     {
       "path": "scripts/aipc_preflight.py",
-      "bytes": 3315,
-      "sha256": "e1e27212b2ae61b17c6f5aba48c4969bb9ea384ba8bc2031095bfe0d8ffb2043"
+      "bytes": 3388,
+      "sha256": "b2afc4cf6dab7bdaa0a564e8177dd6fab25d00f529ee13e030055ea67ac554ea"
     },
     {
       "path": "scripts/analyze_samples.py",
@@ -586,8 +601,8 @@
     },
     {
       "path": "scripts/setup_aipc.ps1",
-      "bytes": 1359,
-      "sha256": "8a6f2066d3046ebb7bdf95ab00622e79cf9ad84a739ee88ae9f3cb4f6b57083a"
+      "bytes": 1668,
+      "sha256": "51b29b72787d6dc9b1139a07f17dea69e29860202eb0dffcc7eefeeb9c61dcad"
     },
     {
       "path": "scripts/validate_demo.py",

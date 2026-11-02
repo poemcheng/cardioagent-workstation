@@ -31,5 +31,8 @@
   "aipc_browser_visual_qa": false,
   "local_llm_execution_verified": false,
   "windows_execution_verified": false,
-  "public_browser_version": "2.1.0"
+  "public_browser_version": "2.1.0",
+  "aipc_default_model": "Phi-4-mini-instruct-GGUF",
+  "competition_resource_audit_date": "2026-11-03",
+  "competition_eligibility_verified": false
 }
