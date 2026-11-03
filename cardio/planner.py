@@ -76,15 +76,24 @@ class Planner:
         start = time.perf_counter()
         state = {"completed_tools": list(run["completed"]), "candidate_count": len(run.get("vision", {}).get("candidates", [])), "field_present": {k: run["context"].get(k) is not None for k in ("age", "acute", "history_complete", "consent")}, "allowed_next": [expected]}
         payload = {"model": self.config.get("planner_model", ""), "messages": [{"role": "system", "content": 'Choose one allowed_next tool. Return only JSON {"tool":"name"}. No medical interpretation.'}, {"role": "user", "content": json.dumps(state)}], "temperature": 0, "max_tokens": 80, "stream": False}
+        evidence = {"requested_model": payload['model']}
         try:
             if not payload["model"]:
                 raise ValueError("尚未設定 Lemonade model ID")
-            self.local_model(payload["model"])
+            selected = self.local_model(payload["model"])
+            evidence['recipe'] = selected.get('recipe')
             result = self.request("/chat/completions", payload, timeout=self.config.get("planner_timeout_s", 45))
+            evidence.update(response_id=result.get('id'), model=result.get('model'),
+                            usage=result.get('usage'), request_trace=result.get('_cardio_request'))
+            if result.get("model") != payload["model"]:
+                raise ValueError("回應模型與指定本機模型不符")
+            if not isinstance(result.get("id"), str) or not result["id"].strip():
+                raise ValueError("模型回應缺少 response ID")
             content = result["choices"][0]["message"]["content"]
             choice = json.loads(content)
             if set(choice) != {"tool"} or choice["tool"] != expected or choice["tool"] not in TOOLS:
                 raise ValueError("工具計畫不符合允許清單或依賴")
-            return expected, {"source": "lemonade", "response_id": result.get("id"), "model": result.get("model"), "usage": result.get("usage"), "elapsed_ms": round((time.perf_counter()-start)*1000)}
+            return expected, {**evidence, "source": "lemonade",
+                "elapsed_ms": round((time.perf_counter()-start)*1000)}
         except Exception as exc:
-            return expected, {"source": "rules_fallback", "reason": str(exc)[:300], "elapsed_ms": round((time.perf_counter()-start)*1000)}
+            return expected, {**evidence, "source": "rules_fallback", "reason": str(exc)[:300], "elapsed_ms": round((time.perf_counter()-start)*1000)}

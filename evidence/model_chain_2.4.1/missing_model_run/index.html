@@ -1,0 +1,9 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CardioAgent CAC 與本機模型同次驗收</title><style>body{font:16px/1.65 system-ui;color:#20282d;max-width:1000px;margin:32px auto;padding:0 24px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ccd2d6;padding:10px;text-align:left}th{background:#f1f3f4}code{overflow-wrap:anywhere}a{color:#315a70}</style>
+<h1>CAC 與本機模型同次驗收 · 2.4.1</h1>
+<p>2026-11-03T16:02:27.387935+00:00 · Linux / Python 3.12.14</p>
+<p>本次軟體鏈：<strong>受阻</strong>；輸入：synthetic_software_fixture。</p>
+<table><tr><th>項目</th><th>狀態</th><th>原因</th></tr><tr><td>授權輸入與背景</td><td>通過</td><td></td></tr><tr><td>指定權重與訓練來源聲明</td><td>受阻</td><td>未配置 CT 模型。請使用 scripts/register_model.py 登錄 ST-CAC ONNX 與 SHA256。</td></tr><tr><td>已下載的本機模型</td><td>受阻</td><td>&lt;urlopen error [Errno 111] Connection refused&gt;</td></tr><tr><td>同一病例的六工具執行鏈</td><td>受阻</td><td>必要模型受阻，未啟動工具或以合成／規則結果替代。</td></tr></table><ul></ul>
+<p>這次保持待人工覆核，沒有自動建立會診任務或簽署報告。訓練模型依登錄聲明及指定 SHA256 核對，未驗證原 PyTorch 的等價性、病灶準確度或臨床效益。</p>
+<p>合成輸入只驗證軟體串接。Provider、模型目錄及 recipe 不證明 AMD／NPU 裝置實際執行；需另附同一 response ID 的 runtime 裝置紀錄。</p>
+<p>來源版本：<code>a113a3c7379871506cd4959bbc168863dc094f02</code>。來源程式雜湊與本次原始資料見下列 JSON。</p><p><a href="acceptance.json">acceptance.json</a> · <a href="requests.json">requests.json</a> · <a href="SHA256SUMS.txt">SHA256SUMS.txt</a></p></html>

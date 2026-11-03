@@ -119,7 +119,7 @@ def demo_candidates(arr):
 
 
 def nms(boxes, scores, threshold=0.5):
-    order = np.argsort(scores)[::-1]
+    order = np.argsort(-scores, kind="stable")
     keep = []
     while order.size and len(keep) < 300:
         i = int(order[0]); keep.append(i)
@@ -140,6 +140,7 @@ class Detector:
         self.config = config
         self.session = None
         self.session_hash = None
+        self.session_provider = None
 
     def manifest(self):
         path = self.root / "models" / "detector.json"
@@ -156,30 +157,43 @@ class Detector:
         return manifest, model
 
     def detect(self, arrays, index, is_hu):
-        if len(arrays) < 3:
+        if not 3 <= len(arrays) <= 64:
             raise ValueError("2.5D 模型至少需要三張依序切片，禁止將單張假充相鄰序列。")
-        if arrays[0].shape != (512, 512):
+        if type(index) is not int or not 0 <= index < len(arrays):
+            raise ValueError("中心切片索引無效。")
+        if any(a.shape != (512, 512) for a in arrays):
             raise ValueError("目前模型契約只接受 512×512 影像，避免未驗證的縮放誤差。")
         if is_hu:
             raise ValueError("目前 ST-CAC 模型使用 8-bit PNG；DICOM 可檢視，推論須先以訓練時相同窗位匯出及驗證。")
         manifest, path = self.manifest()
+        processing = manifest.get('postprocessing', {})
+        if not isinstance(processing, dict) or set(processing) - {'confidence', 'nms_iou'}:
+            raise ValueError("模型後處理契約無效。")
+        confidence = processing.get('confidence', self.config.get('confidence', .25))
+        nms_iou = processing.get('nms_iou', self.config.get('nms_iou', .5))
+        if any(type(v) not in (int, float) or not np.isfinite(v) or not 0 <= v <= 1 for v in (confidence, nms_iou)):
+            raise ValueError("confidence 與 NMS IoU 須為 0–1 的有限數值。")
         import onnxruntime as ort
         wanted = self.config.get("vision_provider", "CPUExecutionProvider")
         if wanted not in ort.get_available_providers():
             raise ValueError(f"指定執行器不可用：{wanted}；未靜默改用其他裝置。")
-        if self.session is None or self.session_hash != manifest["sha256"]:
+        if self.session is None or self.session_hash != manifest["sha256"] or self.session_provider != wanted:
             options = ort.SessionOptions()
             options.intra_op_num_threads = 4
             options.enable_mem_pattern = False
             options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
             self.session = ort.InferenceSession(str(path), sess_options=options, providers=[wanted])
             self.session_hash = manifest["sha256"]
-        inp = self.session.get_inputs()[0]
-        if inp.shape != [1, 3, 512, 512] or inp.type != "tensor(float)":
+            self.session_provider = wanted
+        inputs, outputs = self.session.get_inputs(), self.session.get_outputs()
+        if len(inputs) != 1 or inputs[0].shape != [1, 3, 512, 512] or inputs[0].type != "tensor(float)":
             raise ValueError("ONNX 輸入須為 float32 [1,3,512,512]。")
+        if len(outputs) != 1 or outputs[0].type != "tensor(float)":
+            raise ValueError("ONNX 須為單一 float32 候選輸出。")
+        inp = inputs[0]
         indices = [max(index-1, 0), index, min(index+1, len(arrays)-1)]
         tensor = np.stack([arrays[i] for i in indices]).astype(np.float32)[None] / 255.0
-        if tensor.min() < 0 or tensor.max() > 1:
+        if not np.isfinite(tensor).all() or tensor.min() < 0 or tensor.max() > 1:
             raise ValueError("模型輸入須在 8-bit 0–255 範圍。")
         pred = self.session.run(None, {inp.name: tensor})[0]
         if pred.ndim != 3 or pred.shape[0] != 1 or pred.shape[1] != 5 or pred.shape[2] > 100000:
@@ -187,8 +201,19 @@ class Detector:
         rows = pred[0].T
         if not np.isfinite(rows).all() or np.any((rows[:,4]<0)|(rows[:,4]>1)):
             raise ValueError("模型輸出含無效數值或未 sigmoid 的 confidence。")
-        rows = rows[(rows[:,4] >= self.config.get("confidence", .25)) & (rows[:,2]>0) & (rows[:,3]>0)]
+        rows = rows[(rows[:,4] >= confidence) & (rows[:,2]>0) & (rows[:,3]>0)]
         boxes = np.c_[rows[:,:2] - rows[:,2:4]/2, rows[:,:2] + rows[:,2:4]/2]
         boxes = np.clip(boxes, 0, 512)
-        keep = nms(boxes, rows[:,4])
-        return {"candidates": [{"xyxy": boxes[i].round(3).tolist(), "confidence": float(rows[i,4]), "class": "CAC candidate"} for i in keep], "engine": manifest["name"], "trained": manifest.get("trained", False), "device": self.session.get_providers(), "requested_provider": wanted, "model_sha256": manifest["sha256"], "center_index": index, "input_indices": indices, "threshold": self.config.get("confidence", .25), "scope": "candidate localization; no Agatston score", "warning": "訓練來源依登錄聲明；本平台未重新驗證其臨床效能。"}
+        valid = (boxes[:,2] > boxes[:,0]) & (boxes[:,3] > boxes[:,1])
+        boxes, rows = boxes[valid], rows[valid]
+        keep = nms(boxes, rows[:,4], nms_iou)
+        from .store import canonical
+        return {"candidates": [{"xyxy": boxes[i].round(3).tolist(), "confidence": float(rows[i,4]), "class": "CAC candidate"} for i in keep],
+            "engine": manifest["name"], "trained": manifest.get("trained", False),
+            "inference_executed": True, "device": self.session.get_providers(), "requested_provider": wanted,
+            "provider_scope": "configured session providers; not per-node or NPU execution proof",
+            "model_sha256": manifest["sha256"], "model_manifest_sha256": hashlib.sha256(canonical(manifest).encode()).hexdigest(),
+            "model_provenance": manifest.get('provenance'), "normalization": "8-bit grayscale / 255; NCHW; previous,center,next",
+            "center_index": index, "input_indices": indices, "threshold": confidence,
+            "postprocessing": {"confidence": confidence, "nms_iou": nms_iou, "max_candidates": 300, "ties": "input_order"},
+            "scope": "candidate localization; no Agatston score", "warning": "訓練來源依登錄聲明；本平台未重新驗證其臨床效能。"}

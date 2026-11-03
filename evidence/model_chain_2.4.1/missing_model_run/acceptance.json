@@ -1,0 +1,51 @@
+{
+  "schema": "cardio-model-chain-acceptance/1",
+  "id": "a707e8b66900490993f90baddae98ec6",
+  "created_at": "2026-11-03T16:02:27.387935+00:00",
+  "software_version": "2.4.1",
+  "source_commit": "a113a3c7379871506cd4959bbc168863dc094f02",
+  "host": {
+    "os": "Linux",
+    "architecture": "x86_64",
+    "python": "3.12.14"
+  },
+  "selected_model": "Phi-4-mini-instruct-GGUF",
+  "expected_vision_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "input_scope": "synthetic_software_fixture",
+  "checks": {
+    "input": {
+      "passed": true,
+      "case_id": "demo-ct-positive",
+      "center": 1,
+      "slices": 3
+    },
+    "vision_model": {
+      "passed": false,
+      "error": "未配置 CT 模型。請使用 scripts/register_model.py 登錄 ST-CAC ONNX 與 SHA256。"
+    },
+    "local_model": {
+      "passed": false,
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    "chain": {
+      "passed": false,
+      "error": "必要模型受阻，未啟動工具或以合成／規則結果替代。"
+    }
+  },
+  "passed_requested_scope": false,
+  "research_input_chain_verified": false,
+  "amd_hardware_execution_verified": false,
+  "npu_execution_verified": false,
+  "clinical_accuracy_verified": false,
+  "pytorch_onnx_equivalence_verified": false,
+  "human_review_performed": false,
+  "raw_images_exported": false,
+  "measurement_scope": "isolated Flask test client and real loopback LLM; excludes browser, human work, TTFT and device profiling",
+  "source_files_sha256": {
+    "cardio/agent.py": "6f71e6fbb35cd5d21d3e72ed668de4b1b9d585884af0c70fa7ff47787992d8c5",
+    "cardio/planner.py": "0500298369fc4eeb4cbdc0020d47a2cab73259f362b5ee4372d863861c425f6c",
+    "cardio/imaging.py": "2f94945fe727831e68fb807e4948ce8d8debb74bc3acc0348c868667ff0acd5e",
+    "scripts/accept_model_chain.py": "70b87b521983798246fc06478f453ac6b02d7eb93b64e275c9aaf271ea91b8fb",
+    "config.json": "adcf96224cf9d59d7434de74fa1c5aafeb08c98b6dca8acf976747004ace4788"
+  }
+}

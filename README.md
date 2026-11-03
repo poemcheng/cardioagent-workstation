@@ -1,10 +1,10 @@
-# CardioAgent 2.4.0 會診準備中心
+# CardioAgent 2.4.1 會診準備中心
 
-新增任務規格、來源核對、實際工具進度、共用本機模型佇列與成本情境。
+新增 CAC 與本機 LLM 同次驗收、模型回應身分核對、可登錄的 NMS 閾值，以及來源變更後的續跑／覆核阻擋。
 
-- [公開操作](https://poemcheng.github.io/cardioagent-workstation/?view=workspace&revision=2.4.0)
+- [公開操作](https://poemcheng.github.io/cardioagent-workstation/?view=workspace&revision=2.4.1)
 - 本機：`http://127.0.0.1:8765/workspace`
-- [操作與版本範圍](docs/RELEASE_2.4.0_zh-TW.md)
+- [操作與版本範圍](docs/RELEASE_2.4.1_zh-TW.md)
 - [Windows 軟體安裝包](https://github.com/poemcheng/cardioagent-workstation/releases/latest)
 
 以下保留既有工作站及研究功能說明；歷史版本紀錄不代表本版 AMD 或臨床驗收。

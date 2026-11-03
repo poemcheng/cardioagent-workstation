@@ -1,0 +1,17 @@
+{
+  "software_version": "2.4.1",
+  "python": "3.12.14",
+  "os": "Linux",
+  "software_tests": 227,
+  "software_tests_passed": true,
+  "new_model_chain_tests": 10,
+  "preparation_dom_checks": 7,
+  "renderer_logic_checks": 7,
+  "onnx_test_graph": "untrained contract fixture, actual ONNX Runtime execution",
+  "llm_in_tests": "loopback HTTP protocol fixture, no actual LLM weights",
+  "missing_model_rehearsal": "correctly blocked; no substitute inference or approval",
+  "amd_hardware_verified": false,
+  "npu_execution_verified": false,
+  "clinical_accuracy_verified": false,
+  "browser_visual_qa": "recorded separately after publication"
+}

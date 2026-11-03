@@ -1,8 +1,8 @@
 {
   "name": "CardioAgent",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "date": "2026-11-03",
-  "edition": "Preparation briefs, actual tool supervision, shared local model queue and explicit cost scenarios",
+  "edition": "Source-bound CAC and local model chain acceptance, explicit NMS and model identity checks",
   "target": "Windows 11 x64 / CPython 3.11 x64 / separately installed Lemonade and AMD backends",
   "public_url": "https://poemcheng.github.io/cardioagent-workstation/",
   "github_repository": "https://github.com/poemcheng/cardioagent-workstation",

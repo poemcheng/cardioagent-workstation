@@ -4,5 +4,6 @@
   "planner_timeout_s": 45,
   "vision_provider": "CPUExecutionProvider",
   "confidence": 0.25,
+  "nms_iou": 0.5,
   "dictation_model": ""
 }

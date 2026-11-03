@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import time
 import uuid
 import numpy as np
@@ -25,6 +26,25 @@ class Agent:
         self.store, self.root, self.data = store, root, data
         self.detector, self.planner = detector, planner
 
+    def source_snapshot(self, case):
+        paths = []
+        if not 1 <= len(case['slices']) <= 64:
+            raise ValueError('來源切片數須為 1–64。')
+        for name in case['slices']:
+            path = (self.data/name).resolve()
+            if not path.is_relative_to(self.data.resolve()) or not path.is_file():
+                raise ValueError('影像來源必須位於本機資料目錄。')
+            paths.append(path)
+        return {"modality": case['modality'], "synthetic": case.get('synthetic', False),
+                "slice_sha256": [sha256(p) for p in paths],
+                "case_metadata_sha256": hashlib.sha256(canonical(case).encode()).hexdigest()}
+
+    def verify_source(self, run):
+        current = self.source_snapshot(self.store.case(run['case_id']))
+        if any(current.get(k) != v for k, v in run['snapshot'].items()):
+            raise ValueError('來源影像或病例資訊已變更，請建立新工作。')
+        return current
+
     def create(self, case, context, planner, mode, center):
         if planner not in {"rules", "lemonade"} or mode not in {"demo", "model"}:
             raise ValueError("規劃或推論模式無效。")
@@ -32,7 +52,7 @@ class Agent:
             raise ValueError("合成示範模式僅能使用內附合成 CT，禁止對真實影像產生假推論。")
         if type(center) is not int or not 0 <= center < len(case["slices"]):
             raise ValueError("切片索引無效。")
-        run = {"id": uuid.uuid4().hex, "case_id": case["id"], "created_at": now(), "status": "queued", "version": 1, "center": center, "context": validate_context(context), "settings": {"planner": planner, "mode": mode}, "completed": [], "tool_log": [], "snapshot": {"modality": case["modality"], "synthetic": case.get("synthetic", False), "slice_sha256": [sha256(self.data/p) for p in case["slices"]]}}
+        run = {"id": uuid.uuid4().hex, "case_id": case["id"], "created_at": now(), "status": "queued", "version": 1, "center": center, "context": validate_context(context), "settings": {"planner": planner, "mode": mode}, "completed": [], "tool_log": [], "snapshot": self.source_snapshot(case)}
         self.store.save_run(run, "run_created", {"settings": run["settings"], "image_hashes": run["snapshot"]["slice_sha256"]})
         return run
 
@@ -55,6 +75,7 @@ class Agent:
                 self.store.save_run(run, "acute_status_required")
                 return
             case = self.store.case(run["case_id"])
+            self.verify_source(run)
             arrays = [np.load(self.data/p, allow_pickle=False) for p in case["slices"]]
             for tool in TOOLS:
                 if tool in run["completed"]:
@@ -96,6 +117,7 @@ class Agent:
                 entry = {"tool": tool, "plan": plan, "result": result, "elapsed_ms": round((time.perf_counter()-start)*1000)}
                 run["tool_log"].append(entry)
                 self.store.save_run(run, "tool_completed", entry)
+            self.verify_source(run)
             run["status"] = "pending_review"
             run.pop("missing", None)
             self.store.save_run(run, "ready_for_review")
@@ -107,7 +129,11 @@ class Agent:
         run = self.store.run(ident)
         if run["status"] != "pending_data" or run["version"] != version:
             raise ValueError("僅可續跑待補件工作，且版本須一致。")
-        run["context"] = validate_context(context)
+        new_context = validate_context(context)
+        # Acute escalation must remain possible even when the old image changed.
+        if new_context['acute'] is not True:
+            self.verify_source(run)
+        run["context"] = new_context
         run["version"] += 1
         run["status"] = "queued"
         run["completed"] = [t for t in run["completed"] if t in TOOLS[:2]]
@@ -128,6 +154,9 @@ class Agent:
             if decision == "approve":
                 if run["completed"] != TOOLS or run["context"]["consent"] is not True or run["context"]["acute"] is not False:
                     raise ValueError("工具、同意或急性警訊狀態不符合核准條件。")
+                self.verify_source(run)
+                if not self.store.verify()['valid']:
+                    raise ValueError('事件鏈檢核失敗，不能核准交接。')
                 for proposal in (run["consult_proposal"], run["followup_proposal"]):
                     task = proposal | {"id": uuid.uuid4().hex, "run_id": ident, "case_id": run["case_id"], "status": "local_open", "demo": run["snapshot"]["synthetic"], "created_at": now()}
                     db.execute("INSERT INTO tasks VALUES (?,?,?,?)", (task["id"], ident, task["kind"], canonical(task)))

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "checks": [
+    "Initial board has zero actual orders and authenticated demo scope",
+    "Unknown clinical/context/authorization fields prevent execution",
+    "New immutable brief executes actual MRI reconstruction and displays all eight tool stages",
+    "Prepared evidence links to the existing source-bound human review workspace",
+    "Board derives approved state from actual analysis review instead of auto-approving jobs",
+    "Cost inputs persist and calculate the explicitly labelled scenario without claiming observed savings",
+    "Untrusted brief text renders as text and does not create HTML elements"
+  ],
+  "checks_count": 7,
+  "transport": "actual BrowserRuntime Flask client",
+  "browser_visual_qa": false,
+  "errors": []
+}

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="csrf-token" content="{{ csrf }}"><title>遠心協作｜會診準備中心</title><link rel="stylesheet" href="/static/hospital.css"><link rel="stylesheet" href="/static/workspace.css"><script defer src="/static/workspace.js"></script></head>
 <body class="preparation-page">
-<header class="prep-header"><div><strong>遠心協作</strong><span>會診準備中心 · 2.4.0</span></div><nav aria-label="工作站"><a href="/workspace" aria-current="page">準備中心</a><a href="/analysis">影像與 3D</a><a href="/">檢查與報告</a><a href="/research">協作流程</a></nav><span id="prepUser"></span></header>
+<header class="prep-header"><div><strong>遠心協作</strong><span>會診準備中心 · 2.4.1</span></div><nav aria-label="工作站"><a href="/workspace" aria-current="page">準備中心</a><a href="/analysis">影像與 3D</a><a href="/">檢查與報告</a><a href="/research">協作流程</a></nav><span id="prepUser"></span></header>
 <div class="prep-scope"><span id="prepScope">本機研究工作站</span><span>模型結果與人工判斷分別記錄</span></div>
 <main class="prep-main"><div class="prep-title"><div><p class="prep-kicker">REVIEW PREPARATION</p><h1>看清楚進度，再開始判讀。</h1><p>先定義問題與資料，再執行工具、檢視證據與人工覆核。</p></div><div class="prep-actions"><button id="refreshBoard">重新整理</button><button id="newOrder" class="primary">新增準備任務</button></div></div>
 <section class="prep-counts" aria-label="實際任務數量"><div><span>全部任務</span><strong id="countOrders">0</strong></div><div><span>待人工覆核</span><strong id="countReview">0</strong></div><div><span>需要處理</span><strong id="countAttention">0</strong></div><div><span>已覆核分析</span><strong id="countReviewed">0</strong></div></section>
