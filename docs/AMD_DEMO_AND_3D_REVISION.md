@@ -36,18 +36,18 @@ The present host reports AMD EPYC CPU, not the target Ryzen AI PC. This revision
 
 The previous 8-slice MRI surface pooled a full 512 × 428 field to steps Z/Y/X = 1/8/7 and rendered flat face normals. With unknown physical spacing, an unscaled voxel display flattened the short-axis stack.
 
-The revised display uses the occupied ROI, a finer 1/2/2 sampling step, Taubin relaxation and shared vertex normals. The original binary mask, original measurement statistics, and source OBJ/STL mesh are unchanged. Users can switch the source surface and the display-only sampling ratio independently.
+The revised display uses the occupied ROI, a finer trilinearly interpolated scalar field, two binomial filtering passes, a marching-tetrahedra isosurface, Taubin relaxation and shared vertex normals. The original binary mask, original measurement statistics, and source OBJ/STL mesh are unchanged. Users can switch the source surface and the display-only sampling ratio independently.
 
 | Measured item | Result |
 |---|---|
 | Research-label union | 75,846 original voxels |
 | Source mesh | 1,208 vertices / 2,412 triangles |
-| Display preview | 10,899 vertices / 21,800 triangles |
+| Display preview | 65,374 vertices / 130,744 triangles |
 | Source-mask SHA-256 | acfe6be4210024a9b070201f98154e61d7814eaa6548fe947d0a454f6f5e6f44 |
 | Preview smoothing | Taubin, 10 iterations, lambda 0.5, mu −0.53 |
-| Largest displacement before display scaling | 1.7310203289 source voxel units |
+| Largest displacement before display scaling | 1.2636362686 source voxel units (Taubin relaxation after isosurface extraction) |
 | Physical volume | null; no verified mm³ |
-| Python tests | 193 passed |
+| Python tests | 194 passed |
 | Renderer numerical/input/lifecycle checks | 7 passed, recording doubles; browser visual QA recorded separately |
 
 ### Matched source and spatial uncertainty

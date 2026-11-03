@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-Hant">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CardioAgent｜心臟影像研究工作站</title><link rel="stylesheet" href="shell.css"><script defer src="shell.js?v=2.3.0-public2"></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CardioAgent｜心臟影像研究工作站</title><link rel="stylesheet" href="shell.css"><script defer src="shell.js?v=2.3.0-public3"></script></head>
 <body>
 <header class="public-bar"><strong>CardioAgent 公開研究展示</strong><span>資料於本分頁暫存，保留結果請下載 JSON</span><nav><a href="https://github.com/poemcheng/cardioagent-workstation" target="_blank" rel="noopener noreferrer">GitHub 原始碼</a><button id="restart">重新啟動展示</button></nav></header>
 <main id="boot"><section class="boot-card"><span class="eyebrow">CARDIAC IMAGING WORKSTATION</span><h1>心臟影像分析與三維重建</h1><p>沿用 Python／NumPy 分析與人工覆核流程，由這台電腦的瀏覽器執行。各訪客的影像與紀錄分開保存於自己的分頁。</p><div class="loading"><span id="spinner" aria-hidden="true"></span><p id="bootStatus" role="status">正在載入分析環境，首次開啟需要下載運算元件。</p></div><p class="small">可操作 MRI 閱片、分割、參考比對、3D、術前討論及報告。公開版沒有連接本機 LLM、臨床模型或 AMD NPU。</p><button id="retry" hidden>重新載入</button><details id="failure" hidden><summary>載入錯誤資訊</summary><pre id="failureText"></pre></details></section></main>

@@ -55,6 +55,24 @@ class DisplayMeshTests(unittest.TestCase):
             self.assertEqual(result[name]['vertices'], [])
             self.assertEqual(result[name]['faces'], [])
 
+    def test_interpolated_surface_is_finite_closed_and_oriented_outward(self):
+        result = self.result(display_geometry={'reference_grid_matched': True,
+            'scale_ratio_xyz': [1, 1, 14]})
+        mesh = result['display_mesh']
+        self.assertEqual(mesh['display_field']['interpolation'], 'trilinear')
+        self.assertEqual(mesh['display_field']['surface'], 'marching_tetrahedra')
+        vertices, faces = np.array(mesh['vertices']), np.array(mesh['faces'])
+        self.assertTrue(np.isfinite(vertices).all())
+        self.assertLessEqual(len(faces), 200000)
+        edges = np.sort(np.concatenate((faces[:, [0, 1]], faces[:, [1, 2]], faces[:, [2, 0]])), axis=1)
+        _, degree = np.unique(edges, axis=0, return_counts=True)
+        self.assertTrue(np.all(degree == 2))
+        normals = np.cross(vertices[faces[:, 1]] - vertices[faces[:, 0]],
+                           vertices[faces[:, 2]] - vertices[faces[:, 0]])
+        self.assertTrue(np.all(np.linalg.norm(normals, axis=1) > 1e-12))
+        self.assertTrue(np.all(np.einsum('ij,ij->i', normals,
+            vertices[faces].mean(axis=1) - vertices.mean(axis=0)) > 0))
+
 
 if __name__ == '__main__':
     unittest.main()

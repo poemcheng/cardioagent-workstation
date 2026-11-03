@@ -212,13 +212,105 @@ def _mesh(mask, geometry, max_axis, crop=False):
             "notice": "表面由分割體素邊界組成；粗化網格供顯示，非已驗證的解剖或手術導航模型。"}
 
 
+def _interpolated_label_surface(mask, geometry, aspect_xyz):
+    """Bounded, source-derived scalar isosurface. NumPy-only browser path.
+
+    Linear interpolation and a separable binomial filter operate only on the
+    display field. Source voxels, source mesh and measurements are untouched.
+    Returned coordinates remain in the source geometry, before display scaling.
+    """
+    occupied = [np.flatnonzero(mask.any(axis=tuple(j for j in range(3) if j != i))) for i in range(3)]
+    offset = np.array([a[0] for a in occupied]) - 1
+    stop = np.array([a[-1] + 1 for a in occupied])
+    field = np.pad(mask[tuple(slice(a + 1, b) for a, b in zip(offset, stop))].astype(float), 1)
+    aspect = np.asarray(aspect_xyz)[::-1]
+    physical_step = max((np.asarray(field.shape) - 1) * aspect) / 80
+    axes = [np.linspace(0, n - 1, min(160, max(3, int(np.ceil((n - 1) * a / physical_step)) + 1)))
+            for n, a in zip(field.shape, aspect)]
+    source_step = np.array([(a[-1] - a[0]) / (len(a) - 1) for a in axes])
+    for axis, coordinates in enumerate(axes):
+        low = np.floor(coordinates).astype(int)
+        high = np.minimum(low + 1, field.shape[axis] - 1)
+        weight_shape = [1, 1, 1]; weight_shape[axis] = len(coordinates)
+        weight = (coordinates - low).reshape(weight_shape)
+        field = np.take(field, low, axis=axis) * (1 - weight) + np.take(field, high, axis=axis) * weight
+    # Two binomial passes reduce stair-step appearance in the display field.
+    for _ in range(2):
+        for axis in range(3):
+            pad = [(0, 0)] * 3; pad[axis] = (2, 2)
+            padded = np.pad(field, pad)
+            filtered = np.zeros_like(field)
+            for shift, weight in enumerate((1, 4, 6, 4, 1)):
+                sl = [slice(None)] * 3; sl[axis] = slice(shift, shift + field.shape[axis])
+                filtered += padded[tuple(sl)] * (weight / 16)
+            field = filtered
+    corners = np.array([[0,0,0],[0,0,1],[0,1,1],[0,1,0],[1,0,0],[1,0,1],[1,1,1],[1,1,0]])
+    samples = [field[tuple(slice(int(c), int(c) + n - 1) for c, n in zip(corner, field.shape))] for corner in corners]
+    active = np.argwhere((np.minimum.reduce(samples) < .5) & (np.maximum.reduce(samples) > .5))
+    if not len(active):
+        return _mesh(mask, geometry, 128, crop=True)
+    lattice = active[:, None, :] + corners[None, :, :]
+    lattice_ids = np.ravel_multi_index(tuple(lattice[:, :, i] for i in range(3)), field.shape)
+    scalar = field.ravel()
+    tets = ((0,5,1,6),(0,1,2,6),(0,2,3,6),(0,3,7,6),(0,7,4,6),(0,4,5,6))
+    edges = np.array([[0,1],[1,2],[2,0],[0,3],[1,3],[2,3]])
+    table = ((),((0,3,2),),((0,1,4),),((1,4,2),(2,4,3)),
+             ((1,2,5),),((0,3,5),(0,5,1)),((0,2,5),(0,5,4)),((5,4,3),),
+             ((3,4,5),),((4,5,0),(5,2,0)),((1,5,0),(5,3,0)),((5,2,1),),
+             ((3,4,2),(2,4,1)),((4,1,0),),((2,3,0),),())
+    all_edges, outward = [], []
+    for tet in tets:
+        ids = lattice_ids[:, tet]
+        codes = ((scalar[ids] >= .5) * [1, 2, 4, 8]).sum(axis=1)
+        for code in range(1, 15):
+            selected = ids[codes == code]
+            if not len(selected):
+                continue
+            inside = np.array([bool(code & (1 << k)) for k in range(4)])
+            direction = corners[list(tet)][~inside].mean(0) - corners[list(tet)][inside].mean(0)
+            for triangle in table[code]:
+                all_edges.append(selected[:, edges[list(triangle)]].reshape(-1, 2))
+                outward.append(np.tile(direction, (len(selected), 1)))
+    edge_pairs = np.sort(np.concatenate(all_edges), axis=1)
+    unique_edges, indices = np.unique(edge_pairs, axis=0, return_inverse=True)
+    positions = np.stack(np.unravel_index(unique_edges, field.shape), axis=-1).astype(float)
+    values = scalar[unique_edges]
+    fraction = (.5 - values[:, 0]) / (values[:, 1] - values[:, 0])
+    coords = positions[:, 0] + fraction[:, None] * (positions[:, 1] - positions[:, 0])
+    source_xyz = (coords * source_step + offset)[:, ::-1]
+    spacing, direction = np.asarray(geometry['spacing_xyz']), np.asarray(geometry['direction_xyz'])
+    vertices = np.asarray(geometry['origin_xyz']) + (source_xyz * spacing) @ direction.T
+    faces = indices.reshape(-1, 3)
+    normals = np.cross(vertices[faces[:, 1]] - vertices[faces[:, 0]], vertices[faces[:, 2]] - vertices[faces[:, 0]])
+    away = (np.concatenate(outward) * source_step)[:, ::-1] * spacing
+    away = away @ direction.T
+    flip = np.einsum('ij,ij->i', normals, away) < 0
+    faces[flip] = faces[flip][:, [0, 2, 1]]
+    return {'vertices': vertices.tolist(), 'faces': faces.tolist(), 'units': geometry['units'],
+            'coordinate_system': geometry['coordinate_system'], 'method': 'interpolated_label_isosurface_display',
+            'triangles': len(faces), 'step_zyx': source_step.tolist(), 'coarse_shape_zyx': list(field.shape),
+            'decimated': True, 'topology_verified': False,
+            'display_field': {'interpolation': 'trilinear', 'surface': 'marching_tetrahedra',
+                              'isovalue': .5, 'binomial_filter_passes': 2, 'source_coordinates_preserved': True}}
+
+
 def _display_mesh(mask, geometry, case):
     """Source-bound ROI detail and Taubin relaxation, exclusively for display.
 
     Measurement statistics and exported source mesh do not use this surface.
     No anatomical template, generated heart, or predicted labels are introduced.
     """
-    mesh = _mesh(mask, geometry, 128, crop=True)
+    display = case.get('display_geometry') if isinstance(case, dict) else None
+    ratio = None
+    if not geometry['verified'] and isinstance(display, dict) and display.get('reference_grid_matched') is True:
+        try:
+            ratio = _numbers(display.get('scale_ratio_xyz'), 3)
+            if np.any(ratio < .001) or np.any(ratio > 1000):
+                ratio = None
+        except (ValueError, TypeError):
+            ratio = None
+    mesh = (_interpolated_label_surface(mask, geometry, ratio) if ratio is not None and mask.any()
+            else _mesh(mask, geometry, 128, crop=True))
     points = np.asarray(mesh['vertices'], dtype=float).reshape(-1, 3)
     faces = np.asarray(mesh['faces'], dtype=int).reshape(-1, 3)
     maximum = 0.
@@ -234,23 +326,18 @@ def _display_mesh(mask, geometry, case):
                 points += factor * (total / degree[:, None] - points)
         maximum = float(np.linalg.norm(points - original, axis=1).max())
         mesh['vertices'] = points.tolist()
-    mesh.update(method='roi_boundary_taubin_display', display_only=True,
+    if 'display_field' not in mesh:
+        mesh['method'] = 'roi_boundary_taubin_display'
+    mesh.update(display_only=True,
                 smoothing={'method': 'Taubin', 'iterations': 10, 'lambda': .5, 'mu': -.53,
                            'max_displacement_source_units': maximum},
                 source_mask_sha256=hashlib.sha256(mask.tobytes()).hexdigest(),
                 measurement_source=False,
-                notice='較高解析ROI網格與平滑僅供顯示；數值及來源OBJ/STL仍使用原始遮罩與來源網格。')
-    display = case.get('display_geometry') if isinstance(case, dict) else None
-    if not geometry['verified'] and isinstance(display, dict) and display.get('reference_grid_matched') is True:
-        try:
-            ratio = _numbers(display.get('scale_ratio_xyz'), 3)
-            if np.any(ratio < .001) or np.any(ratio > 1000):
-                raise ValueError('Invalid display ratio')
-            mesh.update(display_scale_xyz=ratio.tolist(), display_scale_verified=False,
+                notice='來源遮罩插值／ROI網格與平滑僅供顯示；數值及來源OBJ/STL仍使用原始遮罩與來源網格。')
+    if ratio is not None:
+        mesh.update(display_scale_xyz=ratio.tolist(), display_scale_verified=False,
                         display_scale_source=display.get('source', 'source_header_pixdim_ratio'),
                         display_scale_notice='來源pixdim比例僅用於外觀；原檔空間單位未定且sform比例不同，未視為毫米校正。')
-        except (ValueError, TypeError):
-            pass
     return mesh
 
 
