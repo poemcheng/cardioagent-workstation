@@ -4,7 +4,7 @@
   "date": "2026-11-03",
   "python_tests": {
     "passed": 217,
-    "elapsed_seconds": 64.762,
+    "elapsed_seconds": 74.839,
     "scope": "development host software tests"
   },
   "preparation_dom_checks": 7,

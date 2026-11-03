@@ -59,6 +59,8 @@ class PreparationTests(unittest.TestCase):
         item = response.json
         self.assertEqual(item['status'], 'pending_review')
         self.assertEqual(item['analysis']['foreground_voxels'], 75846)
+        self.assertIsNone(item['analysis']['candidate_count'])
+        self.assertFalse(item['analysis']['model_inference_executed'])
         self.assertEqual(json.dumps(item['spec'], sort_keys=True), before)
         self.assertGreater(item['machine_elapsed_ms'], 0)
         self.assertFalse(item['device_execution_verified'])

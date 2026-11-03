@@ -201,7 +201,8 @@ class Preparation:
                     'integrity': integrity, 'review': result['review'], 'stages': result['stages'],
                     'source_kind': 'synthetic' if result['source']['synthetic'] else 'research_or_imported',
                     'language_source': (result.get('language') or {}).get('source'),
-                    'candidate_count': len((result.get('recognition') or {}).get('candidates', [])) if result.get('recognition') else None,
+                    'candidate_count': len(result['recognition'].get('candidates', [])) if result.get('recognition') and result['settings']['mode'] != 'inspect' else None,
+                    'model_inference_executed': (result.get('recognition') or {}).get('inference_executed', False),
                     'recognition_engine': (result.get('recognition') or {}).get('engine'),
                     'foreground_voxels': ((result.get('reconstruction') or {}).get('statistics') or {}).get('foreground_voxels')}
                 if result['status'] in {'approved', 'rejected'}:

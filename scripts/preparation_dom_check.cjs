@@ -30,7 +30,7 @@ async function until(fn){const end=Date.now()+15000;while(!fn()){if(Date.now()>e
  [...$('orderDetail').querySelectorAll('button')].find(x=>x.textContent==='另存調整規格').click();
  $('briefAcute').value='false';$('briefHistory').value='true';$('briefConsent').value='true';$('briefForm').dispatchEvent(new w.Event('submit',{cancelable:true}));
  await until(()=>$('countOrders').textContent==='2');const run=$('orderDetail').querySelector('button');assert.equal(run.disabled,false);run.click();
- await until(()=>$('countReview').textContent==='1');assert.match($('orderDetail').textContent,/75,846/);assert.equal($('orderDetail').querySelectorAll('table tr').length,9);checks.push('New immutable brief executes actual MRI reconstruction and displays all eight tool stages');
+ await until(()=>$('countReview').textContent==='1');assert.match($('orderDetail').textContent,/75,846/);assert.match($('orderDetail').textContent,/未執行病灶辨識/);assert.equal($('orderDetail').querySelectorAll('table tr').length,9);checks.push('New immutable brief executes actual MRI reconstruction and displays all eight tool stages');
  const link=[...$('orderDetail').querySelectorAll('a')].find(x=>x.textContent==='開啟影像與覆核');assert.match(link.href,/analysis\?case=research-mri-01&analysis=[a-f0-9]{32}/);checks.push('Prepared evidence links to the existing source-bound human review workspace');
  const token=w.document.querySelector('meta[name="csrf-token"]').content;const post=async(url,body)=>{const r=await request(url,{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':token},body:JSON.stringify(body)});assert.ok(r.ok,await r.clone().text());return r.json();};
  const b=await(await request('/api/workspace')).json(),a=b.orders.find(o=>o.analysis_id).analysis;

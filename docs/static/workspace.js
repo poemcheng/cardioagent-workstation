@@ -1,6 +1,7 @@
 'use strict';
 const P=id=>document.getElementById(id), csrf=document.querySelector('meta[name="csrf-token"]').content;
 const states={draft:'待執行',queued:'佇列中',running:'執行中',pending_review:'待人工覆核',needs_attention:'工具受阻',blocked:'執行受阻',approved:'已覆核',rejected:'已退回'};
+const modeNames={inspect:'量測，不辨識病灶',demo:'合成候選流程測試',model:'已登錄 CT 候選模型'},segNames={threshold:'強度閾值',provided_reference:'提供的研究標籤（非模型預測）',registered_model:'已登錄分割模型'};
 const stageNames={quality:'來源與品質檢查',recognition:'候選／影像量測',explanation:'影像事實整理',segmentation:'分割或研究標籤',comparison:'參考與設定比對',reconstruction:'3D 表面重建',language:'文字整理',discussion:'討論準備檢核'};
 let board=null,cases=[],selected=null,user=null,busy=false,timer=null;
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=String(text);if(cls)e.className=cls;return e;}
@@ -22,10 +23,10 @@ function render(){for(const [key,id] of Object.entries({orders:'countOrders',wai
  renderDetail();if(board.cost_scenario)renderCost(board.cost_scenario,false);
 }
 function renderDetail(){const o=board.orders.find(x=>x.id===selected);if(!o)return;P('detailTitle').textContent=caseLabel(o.case_id);P('detailStatus').replaceChildren(statusBadge(o.status));const out=P('orderDetail');out.replaceChildren();out.append(section('會診問題',o.spec.question),section('準備規格',o.spec.goal));
- const settings=o.spec.settings;out.append(section('本次設定',`${o.spec.source.modality} · ${o.spec.source.synthetic?'合成資料':'研究／匯入影像'} · 中心切片 ${settings.center+1}\n辨識 ${settings.mode} · 分割 ${settings.segmentation_mode} · 閾值 ${settings.threshold} · 類別 ${settings.reference_class}`));
+ const settings=o.spec.settings;out.append(section('本次設定',`${o.spec.source.modality} · ${o.spec.source.synthetic?'合成資料':'研究／匯入影像'} · 中心切片 ${settings.center+1}\n辨識：${modeNames[settings.mode]} · 分割：${segNames[settings.segmentation_mode]} · 閾值 ${settings.threshold} · 類別 ${settings.reference_class}`));
  if(o.blockers.length||o.error){const p=node('div',[...o.blockers,o.error].filter(Boolean).join('；'),'prep-blockers');out.append(p);}
  if(o.analysis){const a=o.analysis;const t=node('table',undefined,'prep-evidence');const head=node('tr');for(const text of ['實際工具階段','結果','時間 ms'])head.append(node('th',text));t.append(head);for(const s of a.stages){const r=node('tr');r.append(node('td',stageNames[s.key]||s.key),node('td',s.status==='ready'?'已完成':'受阻'),node('td',numberText(s.elapsed_ms)));if(s.reason)r.title=s.reason;t.append(r);}out.append(t);
- out.append(section('執行結果',`候選數 ${numberText(a.candidate_count,0)} · 分割體素 ${numberText(a.foreground_voxels,0)}\n文字來源：${a.language_source||'未完成'} · 機器處理 ${numberText(o.machine_elapsed_ms/1000)} 秒（不含人工覆核）`));
+ out.append(section('執行結果',`${a.candidate_count===null?'未執行病灶辨識':(a.model_inference_executed?'模型候選 ':'合成候選 ')+numberText(a.candidate_count,0)} · 分割體素 ${numberText(a.foreground_voxels,0)}\n文字來源：${a.language_source==='rules'?'規則整理':a.language_source==='lemonade'?'本機模型':'請查看原始紀錄'} · 機器處理 ${numberText(o.machine_elapsed_ms/1000)} 秒（不含人工覆核）`));
  if(a.integrity.approval_blockers.length)out.append(node('div',a.integrity.approval_blockers.join('；'),'prep-blockers'));
  if(a.review)out.append(section('人工覆核紀錄',`${a.review.actor} · ${a.review.reason||'已記錄覆核'} · ${a.status}`));
  }else out.append(section('執行狀態',['queued','running'].includes(o.status)?'工作完成後才顯示實際工具結果；本頁不產生模擬進度。':'規格已保存，尚未執行分析。'));
