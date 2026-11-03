@@ -43,12 +43,13 @@ def check(configure=False,model_id='Phi-4-mini-instruct-GGUF'):
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--configure',action='store_true');parser.add_argument('--model',default='Phi-4-mini-instruct-GGUF')
+    parser.add_argument('--require-llm',action='store_true',help='Fail unless the selected downloaded local chat model is available. This does not execute inference or verify NPU use.')
     parser.add_argument('--output',type=Path,default=ROOT/'evidence/aipc_preflight.json')
     args=parser.parse_args(argv);result=check(args.configure,args.model)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(result,ensure_ascii=False,indent=2))
-    return 0 if result['baseline_ready'] else 1
+    return 0 if result['baseline_ready'] and (not args.require_llm or result['local_llm_ready']) else 1
 
 
 if __name__=='__main__':raise SystemExit(main())

@@ -13,14 +13,15 @@ $evidence = [ordered]@{
     device_execution_verified=$false; note="Driver presence and model recipe do not prove request-level NPU execution."
 }
 $directory = Split-Path $Output -Parent
-if ($directory) { New-Item -ItemType Directory -Force $directory | Out-Null }
+if (!$directory) { $directory = "." }
+New-Item -ItemType Directory -Force $directory | Out-Null
 $evidence | ConvertTo-Json -Depth 8 | Set-Content -Encoding UTF8 $Output
 if (Get-Command lemonade -ErrorAction SilentlyContinue) {
-    & lemonade --version 2>&1 | Out-File -Encoding utf8 "evidence\lemonade_version.txt"
-    & lemonade list --downloaded 2>&1 | Out-File -Encoding utf8 "evidence\lemonade_models.txt"
-    & lemonade status 2>&1 | Out-File -Encoding utf8 "evidence\lemonade_status.txt"
+    & lemonade --version 2>&1 | Out-File -Encoding utf8 (Join-Path $directory "lemonade_version.txt")
+    & lemonade list --downloaded 2>&1 | Out-File -Encoding utf8 (Join-Path $directory "lemonade_models.txt")
+    & lemonade status 2>&1 | Out-File -Encoding utf8 (Join-Path $directory "lemonade_status.txt")
 }
 if ($ValidateFLM -and (Get-Command flm -ErrorAction SilentlyContinue)) {
-    & flm validate 2>&1 | Out-File -Encoding utf8 "evidence\flm_validate.txt"
+    & flm validate 2>&1 | Out-File -Encoding utf8 (Join-Path $directory "flm_validate.txt")
 }
 Write-Host "Saved read-only hardware/driver evidence. Also capture runtime device logs and Task Manager NPU activity during a real request."

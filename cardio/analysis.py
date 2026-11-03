@@ -14,6 +14,7 @@ import numpy as np
 
 from .imaging import demo_candidates, quality, sha256
 from .store import canonical, now
+from . import __version__
 
 
 IDENTIFIER = re.compile(r"[0-9a-f]{32}\Z")
@@ -520,7 +521,7 @@ class Analysis:
             self._path(compare_to)
         ident = uuid.uuid4().hex
         created = now()
-        result = {"schema": "cardio-integrated-analysis/1", "software_version": "2.3.0", "id": ident, "case_id": case_id, "run_id": run_id,
+        result = {"schema": "cardio-integrated-analysis/1", "software_version": __version__, "id": ident, "case_id": case_id, "run_id": run_id,
                   "version": 1, "status": "pending_review", "created_at": created, "updated_at": created, "actor": actor,
                   "settings": {"mode": mode, "center": center, "threshold": float(threshold), "segmentation_mode": segmentation_mode, "reference_class": reference_class, "use_llm": use_llm,
                                "model": model_id, "compare_to": compare_to},

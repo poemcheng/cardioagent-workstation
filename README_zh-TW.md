@@ -1,15 +1,15 @@
-# 遠心協作 CardioAgent 2.1.0：完整影像分析與三維工作站
+# 遠心協作 CardioAgent 2.3.1：完整影像分析與三維工作站
 
 沿用 Flask／SQLite／本機 Lemonade／ONNX 架構，將影像來源、辨識、解釋、分割、參考比對、3D 表面、人工討論與報告串成可操作流程。
 
-本次修正分析覆核、來源完整性與未保存討論的操作流程。更新內容及重跑證據見 [2.0.1 修正與執行紀錄](docs/RELEASE_2.0.1_zh-TW.md)。Word／PDF為v2完整操作手冊；本修正的操作差異以此紀錄及文字操作手冊為準。
+本版完成 AMD AI PC 的安裝包與一鍵驗收。請先閱讀 [2.3.1 安裝與實機驗收指南](docs/AMD_AIPC_QUICKSTART_2.3.1.md) 與 [版本修正](docs/RELEASE_2.3.1_zh-TW.md)。來源固定、人工覆核及 3D 演算法沿用既有流程；先前 Word／PDF 以其文件中的版本基準為準。
 
 公開工作站及資料保存方式見 [公開部署說明](docs/PUBLIC_DEPLOYMENT_zh-TW.md)。GitHub下載版缺少Windows wheelhouse時，啟動器會從PyPI安裝套件並由已核對的來源壓縮檔還原影像。
 
 ## 啟動
 
 1. Windows 11 先安裝 **Python 3.11 x64 與 Python Launcher**，完整解壓至可寫入資料夾。
-2. 雙擊 **start_demo_windows.cmd**；以附帶 Windows wheels 離線建立環境，開啟 `http://127.0.0.1:8765/analysis`。
+2. 從完整 Release 下載並核對 SHA256；雙擊 **start_demo_windows.cmd**，以附帶 Windows wheels 離線建立環境，開啟 `http://127.0.0.1:8765/analysis`。
 3. 首次建立管理者帳號（至少12字元密碼），之後保留帳號登入。
 4. 選擇心臟MRI，分割來源選 **提供的研究標籤 · 非 AI 推論**、類別選聯集，按 **執行完整分析** 後查看 **3D重建**。
 5. 亦可按 **載入 3D 合成體模** → **執行完整分析**，驗證已知幾何、參考比對與覆核。

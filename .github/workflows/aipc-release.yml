@@ -1,0 +1,81 @@
+name: AMD AI PC software release
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'cardio/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'requirements*.txt'
+      - 'VERSION.json'
+      - '*.cmd'
+      - '*.ps1'
+      - '.github/workflows/aipc-release.yml'
+      - 'docs/AMD_AIPC_QUICKSTART_2.3.1.md'
+      - 'docs/RELEASE_2.3.1_zh-TW.md'
+permissions:
+  contents: read
+concurrency:
+  group: aipc-release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  windows-release:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Download pinned Windows wheels and install without index access
+        shell: pwsh
+        run: |
+          python -m pip download --only-binary=:all: --dest wheelhouse -r requirements-vision.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Wheel download failed' }
+          python -m pip install --no-index --find-links wheelhouse -r requirements-vision.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Offline dependency installation failed' }
+      - name: Prepare source-pinned data and parse PowerShell launch scripts
+        shell: pwsh
+        run: |
+          python scripts/prepare_demo_assets.py
+          if ($LASTEXITCODE -ne 0) { throw 'Image preparation failed' }
+          python scripts/prepare_aipc_data.py
+          if ($LASTEXITCODE -ne 0) { throw 'Text preparation failed' }
+          Get-ChildItem -Path . -Filter '*.ps1' -Recurse | ForEach-Object {
+            $tokens = $null; $parseErrors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile($_.FullName,[ref]$tokens,[ref]$parseErrors)
+            if ($parseErrors.Count -gt 0) { throw ($parseErrors | Out-String) }
+          }
+      - name: Execute software regressions and source-bound acceptance
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force release_evidence | Out-Null
+          python -m unittest discover -s tests -q > release_evidence/software_tests.log 2>&1
+          if ($LASTEXITCODE -ne 0) { Get-Content release_evidence/software_tests.log; throw 'Software regressions failed' }
+          node scripts/mesh_viewer_check.cjs > release_evidence/renderer_check.json
+          if ($LASTEXITCODE -ne 0) { throw 'Renderer logic checks failed' }
+          python scripts/accept_aipc.py --output release_evidence/windows_software_acceptance
+          if ($LASTEXITCODE -ne 0) { throw 'Software acceptance failed' }
+          python -c "import subprocess,sys; r=subprocess.run([sys.executable,'scripts/accept_aipc.py','--llm','--model','acceptance-model-not-installed','--output','release_evidence/windows_missing_model']); sys.exit(0 if r.returncode==1 else 1)"
+          if ($LASTEXITCODE -ne 0) { throw 'Missing-model rejection failed' }
+      - name: Build clean archive and publish public download
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/build_aipc_release.py --output dist
+          if ($LASTEXITCODE -ne 0) { throw 'Release verification failed' }
+          $version = (Get-Content -Raw VERSION.json | ConvertFrom-Json).version
+          $short = $env:GITHUB_SHA.Substring(0,7)
+          $tag = "aipc-$version-$short"
+          $assets = @(Get-ChildItem dist -File | ForEach-Object { $_.FullName })
+          gh release create $tag @assets --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "CardioAgent $version AMD AI PC software package ($short)" --notes-file docs/RELEASE_2.3.1_zh-TW.md
+          if ($LASTEXITCODE -ne 0) { throw 'Public release creation failed' }

@@ -13,3 +13,5 @@ integrated_demo_data*/
 assets/mri/*.npy
 datasets/mts_dialog/cases.jsonl
 evidence/aipc_preflight.json
+evidence/target_runs/
+dist/

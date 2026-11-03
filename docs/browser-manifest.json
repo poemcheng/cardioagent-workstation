@@ -1,6 +1,6 @@
 {
   "schema": "cardio-browser/1",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "pyodide_version": "0.29.4",
   "runtime_sha256": "524815b1399fd1b6afc06f9c2758634318c04ec87ab82f1c8b19192d5861e078",
   "runtime_bytes": 4922772,
@@ -18,6 +18,6 @@
   "data_persistence": "this_tab_only",
   "llm_or_clinical_models_bundled": false,
   "amd_npu_execution": false,
-  "runtime_update_sha256": "8e91d215055ee42afe385b0e81fbd056d7ec40a2108c089a9db7d57730fc16b8",
-  "runtime_update_bytes": 42498
+  "runtime_update_sha256": "8a00a418bd2abb769371e8715d57903a765efbc5e62152ee16cf7332f21914df",
+  "runtime_update_bytes": 42686
 }

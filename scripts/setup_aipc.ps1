@@ -1,4 +1,4 @@
-param([switch]$PullModel, [string]$Model="Phi-4-mini-instruct-GGUF")
+param([switch]$PullModel, [switch]$RequireLLM, [string]$Model="Phi-4-mini-instruct-GGUF")
 $ErrorActionPreference = "Stop"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 $env:PYTHONUTF8 = "1"
@@ -21,7 +21,7 @@ if ($PullModel) {
 }
 & .\.venv\Scripts\python.exe scripts\aipc_preflight.py --configure --model $Model --output evidence\aipc_preflight.json
 if ($LASTEXITCODE -ne 0) { throw "Baseline data is not ready. Read the preflight JSON." }
-if ($PullModel) {
+if ($PullModel -or $RequireLLM) {
     $preflight = Get-Content -Raw -Encoding UTF8 "evidence\aipc_preflight.json" | ConvertFrom-Json
     if (!$preflight.local_llm_ready) { throw "Data is ready, but the requested local model is not connected. Start Lemonade and check the selected model/backend." }
 }

@@ -3,7 +3,7 @@ setlocal
 cd /d "%~dp0"
 set "PYTHONUTF8=1"
 if not exist ".venv\Scripts\python.exe" goto install
-".venv\Scripts\python.exe" -c "import flask, waitress, numpy, PIL, pydicom" >nul 2>&1
+".venv\Scripts\python.exe" -c "import sys,struct,flask,waitress,numpy,PIL,pydicom; assert sys.version_info[:2] == (3,11) and struct.calcsize('P') == 8" >nul 2>&1
 if errorlevel 1 goto install
 goto ready
 :install

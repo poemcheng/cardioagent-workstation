@@ -5,8 +5,11 @@ from pathlib import Path
 import shutil
 import zipfile
 import argparse
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+from cardio import __version__
 WEB = ROOT/'web'
 DEST = ROOT/'docs'
 WHEELS = ('flask','werkzeug','jinja2','itsdangerous','click','blinker','pydicom')
@@ -62,7 +65,7 @@ def main():
         if p.resolve()!=(wheel_dir/p.name).resolve():
             shutil.copy2(p,wheel_dir/p.name)
         selected.append(p.name)
-    manifest={'schema':'cardio-browser/1','version':'2.3.0','pyodide_version':'0.29.4',
+    manifest={'schema':'cardio-browser/1','version':__version__,'pyodide_version':'0.29.4',
         'runtime_sha256':hashlib.sha256(archive.read_bytes()).hexdigest(),
         'runtime_bytes':archive.stat().st_size,'wheels':selected,
         'pipeline':'original Python Flask/NumPy inside browser Web Worker',

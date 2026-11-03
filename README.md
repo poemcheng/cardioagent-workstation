@@ -2,7 +2,9 @@
 
 **公開操作網址：[開啟工作站](https://poemcheng.github.io/cardioagent-workstation/)**
 
-**AMD AI PC 2.2 本機展示：**新增會診交談擷取、來源回查與交接缺漏檢查；已下載 MTS-Dialog 1,701 筆及建立 12 個中文合成流程案例。Windows 解壓後啟動 `start_aipc_windows.cmd`，操作與模型下載見 [AI PC 操作與驗收指南](docs/AMD_AIPC_GUIDE.md)。此功能在本機執行，公開網頁版維持原有影像流程。LLM 權重及 NPU 驅動需在目標機安裝；目前未宣稱 NPU 實測完成。
+**AMD AI PC 2.3.1 本機展示：**新增會診交談擷取、來源回查與交接缺漏檢查；已下載 MTS-Dialog 1,701 筆及建立 12 個中文合成流程案例。Windows 解壓後啟動 `start_aipc_windows.cmd`，操作與模型下載見 [AI PC 操作與驗收指南](docs/AMD_AIPC_GUIDE.md)。此功能在本機執行，公開網頁版維持原有影像流程。LLM 權重及 NPU 驅動需在目標機安裝；目前未宣稱 NPU 實測完成。
+
+**換機安裝與驗收：**[下載完整 Windows 套件](https://github.com/poemcheng/cardioagent-workstation/releases/latest) → [2.3.1 安裝與實機驗收](docs/AMD_AIPC_QUICKSTART_2.3.1.md)。安裝 Python 3.11 x64 後執行 `setup_windows.ps1 -Offline -WithVision`，再執行 `accept_aipc_windows.cmd` 產生當次 HTML／JSON。完整 Release 附件有 wheels；Source code.zip 沒有。詳見 [版本修正](docs/RELEASE_2.3.1_zh-TW.md)。
 
 **2026-11-03 競賽資源核對修正：**預設模型改為 `Phi-4-mini-instruct-GGUF`（Microsoft Phi 基礎模型，MIT；GGUF 來自 Unsloth），屬 CPU／GPU 路徑。若兼報開源 AI 模型應用組，須遵守核心模型來源限制，不能直接沿用前版 Qwen 預設。Joint Lab 申請表目前已停止收件；八項資源用途、Hybrid 版本限制及尚待驗證項目見 [競賽資源核對表](docs/AMD_COMPETITION_RESOURCE_AUDIT.md)。先前下載包亦可用 `scripts\setup_aipc.ps1 -PullModel -Model Phi-4-mini-instruct-GGUF` 明確指定模型；先前 PDF 的 Qwen／FLM 預設說明以本次線上指南修正為準。
 
