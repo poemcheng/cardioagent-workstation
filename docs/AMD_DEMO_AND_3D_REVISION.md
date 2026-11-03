@@ -47,7 +47,7 @@ The revised display uses the occupied ROI, a finer trilinearly interpolated scal
 | Preview smoothing | Taubin, 10 iterations, lambda 0.5, mu −0.53 |
 | Largest displacement before display scaling | 1.2636362686 source voxel units (Taubin relaxation after isosurface extraction) |
 | Physical volume | null; no verified mm³ |
-| Python tests | 194 passed |
+| Python tests | 195 passed |
 | Renderer numerical/input/lifecycle checks | 7 passed, recording doubles; browser visual QA recorded separately |
 
 ### Matched source and spatial uncertainty
@@ -66,3 +66,5 @@ This partial 8-slice research-label reconstruction does not restore a complete h
 ## Rebuilding and public integrity
 
 `python scripts/build_public.py` retains the existing large source/data base archive and emits a small deterministic update archive containing differences. Both SHA-256 values are verified by the browser worker before Python starts. `--full` produces a new complete base archive. The public demo computes each result from source in the browser; no precomputed surface or generated heart illustration is substituted.
+
+The interpolated preview adapts its sampling grid to a 180,000-triangle budget. A regression test covers the supplied thin class-2 label (25,573 voxels); viewer failures clear any earlier surface instead of retaining another result.

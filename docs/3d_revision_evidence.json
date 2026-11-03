@@ -1,0 +1,57 @@
+{
+  "source_foreground_voxels": 75846,
+  "source_triangles": 2412,
+  "preview_triangles": 130744,
+  "preview_vertices": 65374,
+  "preview_step_zyx": [
+    0.14285714285714285,
+    2.0277777777777777,
+    2.0375
+  ],
+  "display_field": {
+    "interpolation": "trilinear",
+    "surface": "marching_tetrahedra",
+    "isovalue": 0.5,
+    "binomial_filter_passes": 2,
+    "source_coordinates_preserved": true
+  },
+  "display_scale_xyz": [
+    1,
+    1,
+    14.222222222222221
+  ],
+  "physical_volume_mm3": null,
+  "physical_geometry_verified": false,
+  "smoothing": {
+    "method": "Taubin",
+    "iterations": 10,
+    "lambda": 0.5,
+    "mu": -0.53,
+    "max_displacement_source_units": 1.2636362686227094
+  },
+  "source_mask_sha256": "acfe6be4210024a9b070201f98154e61d7814eaa6548fe947d0a454f6f5e6f44",
+  "edge_degree_values": [
+    2
+  ],
+  "finite_vertices": true,
+  "host_seconds": 1.3717666619995725,
+  "python_tests_passed": 195,
+  "renderer_checks_passed": 7,
+  "amd_ryzen_ai_pc_validated": false,
+  "npu_execution_validated": false,
+  "browser_union_preview_verified": true,
+  "browser_source_switch_verified": true,
+  "browser_sampling_toggle_verified": true,
+  "browser_console_errors": 0,
+  "preview_triangle_budget": 180000,
+  "clinical_topology_verified": false,
+  "thin_label_regression": {
+    "class_value": 2,
+    "source_voxels": 25573,
+    "render_budget_regression_passed": true,
+    "preview_vertices": 64778,
+    "preview_triangles": 129560,
+    "grid_resolution_limit": 64
+  },
+  "baseline_browser_verification_commit": "424778d7b0abb3c3450b5caf91b249b3dcce570b"
+}

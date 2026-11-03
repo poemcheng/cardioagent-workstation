@@ -56,7 +56,7 @@ function renderMesh(){
  const ratio=result?.display_mesh?.display_scale_xyz;
  A('meshSamplingLabel').hidden=!ratio;
  const scale=ratio&&A('meshSampling').checked?ratio:[1,1,1];
- try{if(!meshViewer)meshViewer=new CardioMeshViewer(A('meshCanvas'),{onStatus:t=>A('meshRenderer').textContent=t});meshViewer.setMesh(selected||{vertices:[],faces:[],units:'voxel'},{displayScale:scale});}catch(error){A('meshRenderer').textContent=error.message;}
+ try{if(!meshViewer)meshViewer=new CardioMeshViewer(A('meshCanvas'),{onStatus:t=>A('meshRenderer').textContent=t});meshViewer.setMesh(selected||{vertices:[],faces:[],units:'voxel'},{displayScale:scale});}catch(error){try{meshViewer?.setMesh({vertices:[],faces:[],units:'voxel'});}catch(_){}A('meshRenderer').textContent=error.message;}
  if(!result){A('meshDetails').textContent='本次沒有可用重建。請查看分割／幾何來源及受阻原因。';A('meshNotice').textContent='沒有本次重建結果；未使用其他來源補上。';return;}
  const m=selected,g=result.geometry,t=result.statistics;
  A('meshDetails').textContent=`方法：${result.segmentation.method} / ${m.method}\n${m.vertices.length.toLocaleString()} 頂點 · ${m.faces.length.toLocaleString()} 三角形 · 來源單位 ${m.units} · ${g.coordinate_system}\n原始形狀 ${t.shape_zyx.join(' × ')}；網格取樣步長 ${m.step_zyx.map(x=>fmt(x,3)).join(' / ')}\n區域 ${fmt(t.foreground_voxels,0)} 體素；體積 ${t.physical_volume_mm3===null?'未換算（間距未驗證）':fmt(t.physical_volume_mm3)+' mm³'+(activeAnalysis.source.synthetic?'（合成設計）':'（影像標頭）')}\n${ratio?`來源pixdim顯示比例 ${scale.map(x=>fmt(x,4)).join(' / ')}，不代表毫米校正。`:g.notice||''}\n${smooth?'平滑僅供預覽，未改寫遮罩、量測或來源OBJ/STL。':'顯示來源邊界網格。'}`;

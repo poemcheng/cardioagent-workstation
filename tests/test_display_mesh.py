@@ -1,5 +1,7 @@
 """Display improvements must preserve the measured and exported source."""
 import hashlib
+import json
+from pathlib import Path
 import unittest
 import numpy as np
 from cardio.volume import _mesh, reconstruct
@@ -72,6 +74,20 @@ class DisplayMeshTests(unittest.TestCase):
         self.assertTrue(np.all(np.linalg.norm(normals, axis=1) > 1e-12))
         self.assertTrue(np.all(np.einsum('ij,ij->i', normals,
             vertices[faces].mean(axis=1) - vertices.mean(axis=0)) > 0))
+
+    def test_supplied_thin_label_stays_inside_renderer_budget(self):
+        from cardio.bundled_assets import ensure_demo_assets
+        root = Path(__file__).resolve().parents[1]
+        ensure_demo_assets(root)
+        self.mask = np.load(root / 'assets/mri/reference_labels.npy', allow_pickle=False) == 2
+        self.arrays = list(np.zeros(self.mask.shape, np.float32))
+        case = json.loads((root / 'assets/mri/display_geometry.json').read_text())
+        result = self.result(display_geometry=case)
+        mesh = result['display_mesh']
+        self.assertEqual(result['statistics']['foreground_voxels'], 25573)
+        self.assertLessEqual(len(mesh['faces']), 180000)
+        self.assertLess(mesh['display_field']['grid_resolution_limit'], 80)
+        self.assertTrue(np.isfinite(np.array(mesh['vertices'])).all())
 
 
 if __name__ == '__main__':

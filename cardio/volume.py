@@ -212,7 +212,7 @@ def _mesh(mask, geometry, max_axis, crop=False):
             "notice": "表面由分割體素邊界組成；粗化網格供顯示，非已驗證的解剖或手術導航模型。"}
 
 
-def _interpolated_label_surface(mask, geometry, aspect_xyz):
+def _interpolated_label_surface(mask, geometry, aspect_xyz, resolution=80):
     """Bounded, source-derived scalar isosurface. NumPy-only browser path.
 
     Linear interpolation and a separable binomial filter operate only on the
@@ -224,7 +224,7 @@ def _interpolated_label_surface(mask, geometry, aspect_xyz):
     stop = np.array([a[-1] + 1 for a in occupied])
     field = np.pad(mask[tuple(slice(a + 1, b) for a, b in zip(offset, stop))].astype(float), 1)
     aspect = np.asarray(aspect_xyz)[::-1]
-    physical_step = max((np.asarray(field.shape) - 1) * aspect) / 80
+    physical_step = max((np.asarray(field.shape) - 1) * aspect) / resolution
     axes = [np.linspace(0, n - 1, min(160, max(3, int(np.ceil((n - 1) * a / physical_step)) + 1)))
             for n, a in zip(field.shape, aspect)]
     source_step = np.array([(a[-1] - a[0]) / (len(a) - 1) for a in axes])
@@ -272,6 +272,8 @@ def _interpolated_label_surface(mask, geometry, aspect_xyz):
                 all_edges.append(selected[:, edges[list(triangle)]].reshape(-1, 2))
                 outward.append(np.tile(direction, (len(selected), 1)))
     edge_pairs = np.sort(np.concatenate(all_edges), axis=1)
+    if len(edge_pairs) // 3 > 180000:
+        return _interpolated_label_surface(mask, geometry, aspect_xyz, max(16, int(resolution * .8)))
     unique_edges, indices = np.unique(edge_pairs, axis=0, return_inverse=True)
     positions = np.stack(np.unravel_index(unique_edges, field.shape), axis=-1).astype(float)
     values = scalar[unique_edges]
@@ -291,7 +293,8 @@ def _interpolated_label_surface(mask, geometry, aspect_xyz):
             'triangles': len(faces), 'step_zyx': source_step.tolist(), 'coarse_shape_zyx': list(field.shape),
             'decimated': True, 'topology_verified': False,
             'display_field': {'interpolation': 'trilinear', 'surface': 'marching_tetrahedra',
-                              'isovalue': .5, 'binomial_filter_passes': 2, 'source_coordinates_preserved': True}}
+                              'isovalue': .5, 'binomial_filter_passes': 2, 'source_coordinates_preserved': True,
+                              'grid_resolution_limit': resolution, 'triangle_budget': 180000}}
 
 
 def _display_mesh(mask, geometry, case):
