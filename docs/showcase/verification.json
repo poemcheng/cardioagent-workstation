@@ -1,0 +1,32 @@
+{
+  "mask_hash_matches": true,
+  "foreground_voxels": 75846,
+  "preview_positions_equal_existing_renderer_float32": true,
+  "faces_equal_original": true,
+  "bundle_zip_integrity": true,
+  "case_analysis_id": "fc7598a30d624813b17454b6bd65f3c6",
+  "files": 39,
+  "script_reexecution": {
+    "status": "passed",
+    "analysis_id": "6faf5880e75042df82a7755286f4bbbd",
+    "report_status": "final",
+    "report_version": 3,
+    "actual_requests": 41,
+    "clinical_signatory": false
+  },
+  "public_browser_ui": {
+    "status": "completed_through_fhir_export_dialog",
+    "analysis_id": "b34697870d9d417785d01c96877c87d9",
+    "study_id": "22b59be77a0a4d11a2a764f182931b6e",
+    "report_versions": [
+      "draft v1",
+      "preliminary v2",
+      "final v3"
+    ],
+    "webgl_preview_observed": true,
+    "download_bytes_verified": false,
+    "npu_verified": false,
+    "clinical_signatory": false,
+    "notice": "Independent visitor session; not the saved CPython case. Browser download wait timed out; no downloaded file bytes claimed."
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "schema": "cardio-case-files/1",
+  "case": "DEMO-MRI-001",
+  "analysis_id": "fc7598a30d624813b17454b6bd65f3c6",
+  "source_commit": "655deedf7caae717e505855bd8065f0a23eb8efe",
+  "files": [
+    {
+      "path": "README_zh-TW.md",
+      "bytes": 2715,
+      "sha256": "e9895427fd078725c8aad488c3dfc97636e58d84bae12daa2c7fc6d171e98d33"
+    },
+    {
+      "path": "evidence/audit-events.json",
+      "bytes": 6373,
+      "sha256": "e117eabf12620f6a7c70bd5579d7d824f0e9052c0b0e40c43b12df693cf9d9e1"
+    },
+    {
+      "path": "evidence/blocked-order.json",
+      "bytes": 2348,
+      "sha256": "c194ee8b067fa99df79a4fe9c30ab54695cb811c47092199c0874b4634b9c592"
+    },
+    {
+      "path": "evidence/case-summary.json",
+      "bytes": 12761,
+      "sha256": "92e1565f88fa93b621b931c1beb9ba13341b9fe12955288ae344992cfba188ea"
+    },
+    {
+      "path": "evidence/final-report.json",
+      "bytes": 1474,
+      "sha256": "9dd217eec0376a482b8f79b5d6da80901b0f228ca6a7d6a957fcdb7a4331275c"
+    },
+    {
+      "path": "evidence/handoff-fhir.json",
+      "bytes": 3070,
+      "sha256": "3833bdac56074bcd719b9e0ab7202cda76f363f710a997463f8f1748290b02df"
+    },
+    {
+      "path": "evidence/preparation-export.json",
+      "bytes": 6393290,
+      "sha256": "7dd8da9a5e3033734b1516ab367a831d013d9708b55bdd71c25d6f907a5a58d0"
+    },
+    {
+      "path": "evidence/report-draft.json",
+      "bytes": 1284,
+      "sha256": "ba6b288f73a4a22d97a15a62e01d63512e2b054dcf243100f94e3aa0375e9902"
+    },
+    {
+      "path": "evidence/report-history.json",
+      "bytes": 5440,
+      "sha256": "a76d66c489953dfff547e5d523697d10cd1a1b430c1d27be5b8f906b4f824a2f"
+    },
+    {
+      "path": "evidence/requests.json",
+      "bytes": 4998,
+      "sha256": "5cbe39a24aeb9f4c9b3e6238e516bd07c635d981f656e62b3eb9057d2185f0a8"
+    },
+    {
+      "path": "evidence/segmentation-mask.npy",
+      "bytes": 1753216,
+      "sha256": "e2c010a23f7f26ea55af66b8e3d4036e7537afeb84bf32c17a14bae7e5bffac1"
+    },
+    {
+      "path": "evidence/slice-01-mask.png",
+      "bytes": 1662,
+      "sha256": "105b3b9c44c850850a8c7b023302b5c198ad58eaa49d2d7c5568b72739713ef0"
+    },
+    {
+      "path": "evidence/slice-01-original.png",
+      "bytes": 151668,
+      "sha256": "52e7d0882b979d3afd832160faa91f66d00ccfb48ee7545fdd792200eb411ae5"
+    },
+    {
+      "path": "evidence/slice-01-overlay.png",
+      "bytes": 151604,
+      "sha256": "4c53d52d087cf0b0836ce0018b160ad338360e6045b64129658eeea34f661180"
+    },
+    {
+      "path": "evidence/slice-02-mask.png",
+      "bytes": 1542,
+      "sha256": "956465d2d2be021d008a67294169e00ce0dc52d298e179a598d9902b917a6602"
+    },
+    {
+      "path": "evidence/slice-02-original.png",
+      "bytes": 150166,
+      "sha256": "2fef0c0447bfa00f536b1850925228fddbd7d60fa3fc6029c749ccce8dd4b179"
+    },
+    {
+      "path": "evidence/slice-02-overlay.png",
+      "bytes": 149579,
+      "sha256": "1da69f1558417a4d4c67dfd29f04c44118507c3d45c79c3504568c024684d8ae"
+    },
+    {
+      "path": "evidence/slice-03-mask.png",
+      "bytes": 1513,
+      "sha256": "b92406ed4c2a8a99863810732c0ef23123b27544fd394f4f5617f566f929da19"
+    },
+    {
+      "path": "evidence/slice-03-original.png",
+      "bytes": 150895,
+      "sha256": "c6c21e4bf14f102a27b968e7f29a58a2804b766651f48831387dd45ec854e72f"
+    },
+    {
+      "path": "evidence/slice-03-overlay.png",
+      "bytes": 150921,
+      "sha256": "c3a3cfe8d8ecb8ee40f38f4fc49de52a94d043cfc50e1189426cbe4a7e2057e1"
+    },
+    {
+      "path": "evidence/slice-04-mask.png",
+      "bytes": 1416,
+      "sha256": "c4bf1400b856484e1fccdf71aac3efd9ac370142c8e24fb68b4bc83d07c1de9f"
+    },
+    {
+      "path": "evidence/slice-04-original.png",
+      "bytes": 149114,
+      "sha256": "a9264404d68491cba56d47ed65037520b0c6410758c2c4d05045248620e568cb"
+    },
+    {
+      "path": "evidence/slice-04-overlay.png",
+      "bytes": 148907,
+      "sha256": "debeec118cffc67a3ca3def33541993db833bd66851b7f3ab960006441d6b666"
+    },
+    {
+      "path": "evidence/slice-05-mask.png",
+      "bytes": 1360,
+      "sha256": "936ce31ae22bec3c01ed13be0fa2c5768c935cf139b337dc3acb571810f6f711"
+    },
+    {
+      "path": "evidence/slice-05-original.png",
+      "bytes": 144851,
+      "sha256": "232d13210e6facae21eef0bbf5720c311378dda913fad3158ba1ab60d6e2dc56"
+    },
+    {
+      "path": "evidence/slice-05-overlay.png",
+      "bytes": 144776,
+      "sha256": "64fbe91acc0ddafdf563895245853112a39df524d9b4fd70a785201c46a154b5"
+    },
+    {
+      "path": "evidence/slice-06-mask.png",
+      "bytes": 1240,
+      "sha256": "e2eb9bccabb2db3947182c375922ac75f8db1e40fddd51238dcc8e70b63d2fe6"
+    },
+    {
+      "path": "evidence/slice-06-original.png",
+      "bytes": 142162,
+      "sha256": "3132aa3975424be20a762f4bf6f09258479f6b068d300a95a54f87a99872c782"
+    },
+    {
+      "path": "evidence/slice-06-overlay.png",
+      "bytes": 142251,
+      "sha256": "8b1efbaf7e34330a254b8c7a34ac2564e259999ab35a60ac6aa6f40f9de53295"
+    },
+    {
+      "path": "evidence/slice-07-mask.png",
+      "bytes": 1098,
+      "sha256": "a64c8a3855ca453b54ea3836c80b3a23cd35d1076b967d1a689dfb1161219c18"
+    },
+    {
+      "path": "evidence/slice-07-original.png",
+      "bytes": 129523,
+      "sha256": "e20e4521f26f65a1dce74715e12a1247596b7f72f01c6924818e6193cdb60f58"
+    },
+    {
+      "path": "evidence/slice-07-overlay.png",
+      "bytes": 129752,
+      "sha256": "b4a72e2eab91483c5114cc4829873d69acc38ac370b99857a898959f663cfe57"
+    },
+    {
+      "path": "evidence/slice-08-mask.png",
+      "bytes": 950,
+      "sha256": "7ff4a04d9c5fc24fdc99c6985d57be3b4c6dc2cc546d80c4910873244c79efab"
+    },
+    {
+      "path": "evidence/slice-08-original.png",
+      "bytes": 120810,
+      "sha256": "463a3c672221034994c2277f5f52c263a645b161dd97485ead8a4be0034c2f6c"
+    },
+    {
+      "path": "evidence/slice-08-overlay.png",
+      "bytes": 121103,
+      "sha256": "5c42c8addeadaa17a4729a32e854dddc58d55f019d6f55f0be901d2026b04cec"
+    },
+    {
+      "path": "evidence/source-mesh.json",
+      "bytes": 56814,
+      "sha256": "d62277d0413e016f2ffd7fd627ba3dcb355d934516f1bade9dff8da853b2b536"
+    },
+    {
+      "path": "evidence/source-surface-voxel.obj",
+      "bytes": 56604,
+      "sha256": "c77dbf7f72e9c09fc63e1f14541e369f7b166b42cda297e7050308886c362cda"
+    },
+    {
+      "path": "evidence/source-surface-voxel.stl",
+      "bytes": 355623,
+      "sha256": "da43fa4e1328251855fe568dc3b3323874e409469c256e4bfcad343a59042c36"
+    },
+    {
+      "path": "run_showcase_case.py",
+      "bytes": 10388,
+      "sha256": "31f14277ad641cc6e3a44c10185f1953cd18374712b5801477961e2cc68500f8"
+    }
+  ],
+  "notice": "File integrity only; not a clinical signature or an externally anchored timestamp."
+}
