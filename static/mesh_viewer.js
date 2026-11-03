@@ -3,7 +3,7 @@
   'use strict';
   const MAX_FACES = 200000, MAX_VERTICES = 600000, CPU_FACE_LIMIT = 8000;
   const VERTEX = 'attribute vec3 aPosition; attribute vec3 aNormal; uniform mat3 uRotation; uniform vec2 uScale; varying vec3 vNormal; void main(){vec3 p=uRotation*aPosition; gl_Position=vec4(p.x*uScale.x,p.y*uScale.y,p.z*0.5,1.0); vNormal=uRotation*aNormal;}';
-  const FRAGMENT = 'precision mediump float; varying vec3 vNormal; void main(){float light=0.28+0.72*abs(dot(normalize(vNormal),normalize(vec3(0.4,0.7,1.0)))); gl_FragColor=vec4(vec3(0.61,0.69,0.74)*light,1.0);}';
+  const FRAGMENT = 'precision mediump float; varying vec3 vNormal; void main(){vec3 n=normalize(vNormal); if(!gl_FrontFacing)n=-n; vec3 l=normalize(vec3(-0.4,0.65,-1.0)); float key=max(dot(n,l),0.0); float fill=max(dot(n,normalize(vec3(0.7,-0.25,-0.3))),0.0); float spec=pow(max(dot(reflect(-l,n),vec3(0.0,0.0,-1.0)),0.0),28.0); gl_FragColor=vec4(vec3(0.69,0.44,0.40)*(0.26+0.56*key+0.18*fill)+vec3(0.13*spec),1.0);}';
   function finite(value) { return typeof value === 'number' && Number.isFinite(value) && Math.abs(value) <= 1e9; }
   function validate(mesh) {
     if (!mesh || !Array.isArray(mesh.vertices) || !Array.isArray(mesh.faces)) throw Error('3D 網格必須包含 vertices 與 faces 陣列。');
@@ -101,17 +101,21 @@
         parent.append(fallback); this.fallback = fallback; this.ctx = fallback.getContext('2d');
       } else { try { this.ctx = this.canvas.getContext('2d'); } catch (_) {} }
     }
-    setMesh(mesh) {
+    setMesh(mesh, options = {}) {
       if (this.destroyed) throw Error('3D 預覽已關閉。');
       validate(mesh);
+      const displayScale = options.displayScale || [1, 1, 1];
+      if (!Array.isArray(displayScale) || displayScale.length !== 3 || !displayScale.every(v => finite(v) && v >= .001 && v <= 1000)) throw Error('顯示比例必須為三個有限正數。');
+      const displayVertices = mesh.vertices.map(v => v.map((x,k) => x * displayScale[k]));
+      this.displayScale = displayScale.slice();
       const n = mesh.vertices.length, low = [Infinity, Infinity, Infinity], high = [-Infinity, -Infinity, -Infinity];
-      for (const v of mesh.vertices) for (let k = 0; k < 3; k++) { low[k] = Math.min(low[k], v[k]); high[k] = Math.max(high[k], v[k]); }
+      for (const v of displayVertices) for (let k = 0; k < 3; k++) { low[k] = Math.min(low[k], v[k]); high[k] = Math.max(high[k], v[k]); }
       const center = n ? low.map((v, k) => v + (high[k] - v) / 2) : [0, 0, 0];
       let radius = 0;
-      for (const v of mesh.vertices) radius = Math.max(radius, Math.hypot(v[0] - center[0], v[1] - center[1], v[2] - center[2]));
+      for (const v of displayVertices) radius = Math.max(radius, Math.hypot(v[0] - center[0], v[1] - center[1], v[2] - center[2]));
       if (mesh.faces.length && radius === 0) throw Error('3D 網格沒有可顯示的空間範圍。');
       const points = new Float32Array(n * 3), faces = new Uint32Array(mesh.faces.length * 3);
-      for (let i = 0; i < n; i++) for (let k = 0; k < 3; k++) points[i * 3 + k] = (mesh.vertices[i][k] - center[k]) / (radius || 1);
+      for (let i = 0; i < n; i++) for (let k = 0; k < 3; k++) points[i * 3 + k] = (displayVertices[i][k] - center[k]) / (radius || 1);
       mesh.faces.forEach((f, i) => faces.set(f, i * 3));
       const step = Math.max(1, Math.ceil(mesh.faces.length / CPU_FACE_LIMIT));
       const sampled = [];
@@ -120,19 +124,28 @@
       this.units = typeof mesh.units === 'string' ? mesh.units : '未提供';
       if (this.gl && !this.contextLost) this._upload();
       this.reset(); this._status();
-      return {vertices: n, faces: mesh.faces.length, preview_faces: this.gl ? mesh.faces.length : this.cpuFaces.length / 3, renderer: this.gl ? 'webgl' : 'cpu_wireframe', units: this.units};
+      return {vertices: n, faces: mesh.faces.length, preview_faces: this.gl ? mesh.faces.length : this.cpuFaces.length / 3, renderer: this.gl ? 'webgl' : 'cpu_wireframe', units: this.units, display_scale: this.displayScale.slice()};
     }
     _upload() {
       const gl = this.gl;
       if (!gl || this.contextLost) return;
-      const data = new Float32Array(this.faces.length * 6);
+      const data = new Float32Array(this.faces.length * 6), p = this.points;
+      const normals = new Float64Array(p.length);
+      // Area-weighted shared-vertex normals retain the original surface shape.
       for (let i = 0; i < this.faces.length; i += 3) {
-        const a = this.faces[i] * 3, b = this.faces[i + 1] * 3, c = this.faces[i + 2] * 3, p = this.points;
-        const ux = p[b] - p[a], uy = p[b + 1] - p[a + 1], uz = p[b + 2] - p[a + 2];
-        const vx = p[c] - p[a], vy = p[c + 1] - p[a + 1], vz = p[c + 2] - p[a + 2];
-        let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
-        const length = Math.hypot(nx, ny, nz); if (length) { nx /= length; ny /= length; nz /= length; } else { nx = 0; ny = 0; nz = 1; }
-        for (let j = 0; j < 3; j++) { const k = this.faces[i + j] * 3, o = (i + j) * 6; data.set([p[k], p[k + 1], p[k + 2], nx, ny, nz], o); }
+        const a=this.faces[i]*3,b=this.faces[i+1]*3,c=this.faces[i+2]*3;
+        const ux=p[b]-p[a],uy=p[b+1]-p[a+1],uz=p[b+2]-p[a+2];
+        const vx=p[c]-p[a],vy=p[c+1]-p[a+1],vz=p[c+2]-p[a+2];
+        const nx=uy*vz-uz*vy,ny=uz*vx-ux*vz,nz=ux*vy-uy*vx;
+        for (const k of [a,b,c]) {normals[k]+=nx;normals[k+1]+=ny;normals[k+2]+=nz;}
+      }
+      for (let i=0;i<normals.length;i+=3) {
+        const length=Math.hypot(normals[i],normals[i+1],normals[i+2]);
+        if(length>1e-12){normals[i]/=length;normals[i+1]/=length;normals[i+2]/=length;}
+        else {normals[i]=0;normals[i+1]=0;normals[i+2]=1;}
+      }
+      for(let i=0;i<this.faces.length;i++) {
+        const k=this.faces[i]*3;data.set([p[k],p[k+1],p[k+2],normals[k],normals[k+1],normals[k+2]],i*6);
       }
       if (this.buffer) gl.deleteBuffer(this.buffer);
       this.buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);

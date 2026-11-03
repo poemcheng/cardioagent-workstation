@@ -1,0 +1,43 @@
+{
+  "schema": "cardio-display-sampling/1",
+  "reference_grid_matched": true,
+  "source": "matched_NIfTI_GT_pixdim_ratio_display_only",
+  "shape_zyx": [
+    8,
+    512,
+    428
+  ],
+  "scale_ratio_xyz": [
+    1.0,
+    1.0,
+    14.222222222222221
+  ],
+  "header_pixdim_xyz": [
+    0.703125,
+    0.703125,
+    10.0
+  ],
+  "spatial_unit_code": 0,
+  "sform_code": 2,
+  "sform_column_norms": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "physical_geometry_verified": false,
+  "matched_label_array_sha256": "bbe8b5ee2cf3840d8ad0ad10703f0d4c1f10403b0df374c3d60e01f31c487a5f",
+  "matched_image_sha256": [
+    "b1f1b53ea635b7ab4ecc6c795853933a257c458b0df3015c10e34befbc007e3f",
+    "4edef94481c9dd9b9320d05ecfa605985b25cfd5cef03b9cad0f935993f4bcbf",
+    "e07a256bdf6387307b411dd31d6959d6790aa3c3ce09e6b9d850fe85fbfae922",
+    "3ce8cb2adbc6f86863edc3d547b1da59659c53a5e362a7115d7a95cbb4aab692",
+    "e99afb2d609f9f167f402bb6ad73cac7eac7a174b18d4baf98eb2f380bd872f7",
+    "451a81b0d4be06d8cc1b80eb5c2c2fb88fd02bd7e261c1cb61e4848fa57d1935",
+    "30f78d466f74a856f2cee7ec45d11d2a07e072104ee4213ca6906fb50666a49a",
+    "2ea25b52b89a8dbad2349179386cf49b2c88e53d814b2b0e0ac926f73367f73b"
+  ],
+  "source_nifti_sha256": "066da52171e94f28f4c42a124e67c0f888d383e773e843d39479e34b6f9cf67c",
+  "source_filename": "patient057_frame01_gt.nii",
+  "citation": "Bernard et al., IEEE TMI 2018, doi:10.1109/TMI.2018.2837502",
+  "notice": "來源GT逐體素完全相符。pixdim為0.703125/0.703125/10，單位未標示且sform尺度為1，因此僅作可切換的顯示比例，不核准實體量測。"
+}

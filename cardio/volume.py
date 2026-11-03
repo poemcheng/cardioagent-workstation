@@ -161,7 +161,13 @@ def _exposed_faces(mask):
     return result
 
 
-def _mesh(mask, geometry, max_axis):
+def _mesh(mask, geometry, max_axis, crop=False):
+    offset = np.zeros(3, dtype=int)
+    if crop and mask.any():
+        limits = [np.flatnonzero(mask.any(axis=tuple(j for j in range(3) if j != i))) for i in range(3)]
+        offset = np.array([v[0] for v in limits])
+        stop = np.array([v[-1] + 1 for v in limits])
+        mask = mask[tuple(slice(a, b) for a, b in zip(offset, stop))]
     shape = np.asarray(mask.shape, dtype=int)
     step = np.maximum(1, np.ceil(shape / max_axis).astype(int))
     while True:
@@ -177,7 +183,7 @@ def _mesh(mask, geometry, max_axis):
         key = tuple(int(v) for v in point)
         if key not in lookup:
             lookup[key] = len(vertices)
-            world = origin + direction @ ((np.asarray(key, dtype=float) - .5) * spacing)
+            world = origin + direction @ ((np.asarray(key, dtype=float) + offset[::-1] - .5) * spacing)
             vertices.append(world.tolist())
         return lookup[key]
     for axis, side, points in exposed:
@@ -204,6 +210,48 @@ def _mesh(mask, geometry, max_axis):
             "surface_quads": int(quads), "triangles": len(faces),
             "decimated": bool(np.any(step > 1)), "topology_verified": False,
             "notice": "表面由分割體素邊界組成；粗化網格供顯示，非已驗證的解剖或手術導航模型。"}
+
+
+def _display_mesh(mask, geometry, case):
+    """Source-bound ROI detail and Taubin relaxation, exclusively for display.
+
+    Measurement statistics and exported source mesh do not use this surface.
+    No anatomical template, generated heart, or predicted labels are introduced.
+    """
+    mesh = _mesh(mask, geometry, 128, crop=True)
+    points = np.asarray(mesh['vertices'], dtype=float).reshape(-1, 3)
+    faces = np.asarray(mesh['faces'], dtype=int).reshape(-1, 3)
+    maximum = 0.
+    if len(faces):
+        original = points.copy()
+        edges = np.unique(np.sort(np.concatenate((faces[:, [0, 1]], faces[:, [1, 2]], faces[:, [2, 0]])), axis=1), axis=0)
+        left, right = np.concatenate((edges[:, 0], edges[:, 1])), np.concatenate((edges[:, 1], edges[:, 0]))
+        degree = np.bincount(left, minlength=len(points)).clip(1)
+        for _ in range(10):
+            for factor in (.5, -.53):
+                total = np.zeros_like(points)
+                np.add.at(total, left, points[right])
+                points += factor * (total / degree[:, None] - points)
+        maximum = float(np.linalg.norm(points - original, axis=1).max())
+        mesh['vertices'] = points.tolist()
+    mesh.update(method='roi_boundary_taubin_display', display_only=True,
+                smoothing={'method': 'Taubin', 'iterations': 10, 'lambda': .5, 'mu': -.53,
+                           'max_displacement_source_units': maximum},
+                source_mask_sha256=hashlib.sha256(mask.tobytes()).hexdigest(),
+                measurement_source=False,
+                notice='較高解析ROI網格與平滑僅供顯示；數值及來源OBJ/STL仍使用原始遮罩與來源網格。')
+    display = case.get('display_geometry') if isinstance(case, dict) else None
+    if not geometry['verified'] and isinstance(display, dict) and display.get('reference_grid_matched') is True:
+        try:
+            ratio = _numbers(display.get('scale_ratio_xyz'), 3)
+            if np.any(ratio < .001) or np.any(ratio > 1000):
+                raise ValueError('Invalid display ratio')
+            mesh.update(display_scale_xyz=ratio.tolist(), display_scale_verified=False,
+                        display_scale_source=display.get('source', 'source_header_pixdim_ratio'),
+                        display_scale_notice='來源pixdim比例僅用於外觀；原檔空間單位未定且sform比例不同，未視為毫米校正。')
+        except (ValueError, TypeError):
+            pass
+    return mesh
 
 
 def _bounds(mask, geometry):
@@ -272,7 +320,8 @@ def reconstruct(arrays, case, threshold, max_axis=64, mask=None, mask_metadata=N
                   "bounds": _bounds(mask, geometry), "mesh_voxels": int(np.count_nonzero(_pool_mask(mask, np.asarray(mesh["step_zyx"])))),
                   "volume_source": "original_resolution_segmentation_mask" if supplied_mask else "original_resolution_threshold_mask",
                   "units": geometry["units"]}
-    return {"schema": "cardio-volume/1", "geometry": geometry, "mesh": mesh,
+    display_mesh = _display_mesh(mask, geometry, case)
+    return {"schema": "cardio-volume/1", "geometry": geometry, "mesh": mesh, "display_mesh": display_mesh,
             "statistics": statistics, "segmentation": segmentation,
             "elapsed_ms": round((time.perf_counter() - started) * 1000),
             "notice": "三維顯示為研究分割表面，不是已驗證的心臟／血管解剖還原；不得用於手術導航或手術適應症判定。"}

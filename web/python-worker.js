@@ -16,6 +16,15 @@ async function initialize(){
  const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',buffer)),b=>b.toString(16).padStart(2,'0')).join('');
  if(digest!==manifest.runtime_sha256)throw Error('來源套件完整性檢查未通過，請重新整理');
  pyodide.unpackArchive(buffer,'zip',{extractDir:'/project'});
+ if(manifest.runtime_update_sha256){
+  progress('正在核對並載入本次來源程式更新…');
+  const updated=await fetch('cardio-runtime-update.zip?v='+manifest.runtime_update_sha256,{cache:'no-cache'});
+  if(!updated.ok)throw Error('來源更新未下載完成');
+  const patch=await updated.arrayBuffer();
+  const patchDigest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',patch)),b=>b.toString(16).padStart(2,'0')).join('');
+  if(patchDigest!==manifest.runtime_update_sha256)throw Error('來源更新完整性檢查未通過');
+  pyodide.unpackArchive(patch,'zip',{extractDir:'/project'});
+ }
  await pyodide.runPythonAsync("import sys\nsys.path.insert(0,'/project')\nfrom cardio.browser_runtime import BrowserRuntime\ncardio_browser = BrowserRuntime('/session')");
  initialized=true;postMessage({kind:'ready'});
 }

@@ -3,6 +3,20 @@ from pathlib import Path
 import numpy as np
 
 
+def _display_geometry(root, extras):
+    path = root/'assets/mri/display_geometry.json'
+    if not path.is_file():
+        return {}
+    value = json.loads(path.read_text(encoding='utf-8'))
+    meta = extras.get('provided_labels_meta', {})
+    aligned = [x['file_sha256'] for x in meta.get('image_alignment', {}).get('slices', [])]
+    if (value.get('schema') != 'cardio-display-sampling/1' or
+            value.get('matched_label_array_sha256') != meta.get('array_sha256') or
+            value.get('matched_image_sha256') != aligned):
+        raise ValueError('顯示比例與目前研究影像／標籤來源不一致。')
+    return {'display_geometry': value}
+
+
 def seed(store, data, root):
     if store.cases():
         # Enrich existing seeded MRI with its originally supplied research labels.
@@ -12,6 +26,7 @@ def seed(store, data, root):
             from .reference_labels import prepare_reference_labels
             from .store import canonical
             extras = prepare_reference_labels(data, root)
+            extras.update(_display_geometry(root, extras))
             description = json.loads((root/'assets/mri/meta.json').read_text(encoding='utf-8'))['description']
             if any(existing.get(k) != v for k,v in extras.items()) or existing.get('source_detail') != description:
                 existing.update(extras)
@@ -44,4 +59,5 @@ def seed(store, data, root):
             p=folder/src.name;p.write_bytes(src.read_bytes());slices.append(str(p.relative_to(data)))
         from .reference_labels import prepare_reference_labels
         label_extras = prepare_reference_labels(data, root)
+        label_extras.update(_display_geometry(root, label_extras))
         store.put_case({"id":"research-mri-01","label":"ACDC 心臟 MRI · 研究影像","modality":"MRI","is_hu":False,"synthetic":False,"source":"使用者 Google Drive / ACDC preprocessed volume","slices":slices,"reference_boxes":{},"source_detail":info["description"],"provenance":info["provenance"]} | label_extras)

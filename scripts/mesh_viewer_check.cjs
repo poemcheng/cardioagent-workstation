@@ -27,6 +27,12 @@ assert.match(status.at(-1), /CPU.*WebGL/); assert.equal(JSON.stringify(tetra), o
 assert.equal(scene.lines.length, 16); assert.ok(scene.lines.flat().every(Number.isFinite));
 checks.push('valid input draws bounded finite CPU projection and preserves source coordinates/units');
 
+const scaled = viewer.setMesh(tetra,{displayScale:[1,1,14]});
+assert.equal(scaled.display_scale[2],14);assert.equal(JSON.stringify(tetra),original);
+for(const scale of [[0,1,1],[1,1,NaN],[1,1,1001],[1,1]])assert.throws(()=>viewer.setMesh(tetra,{displayScale:scale}));
+viewer.setMesh(tetra);
+checks.push('display-only sampling ratios preserve source vertices and reject invalid scale');
+
 const edgeLength = () => Math.hypot(scene.lines[1][0]-scene.lines[0][0],scene.lines[1][1]-scene.lines[0][1]);
 const before = edgeLength();
 scene.size({width:1000,height:500}); viewer.resize();
@@ -68,7 +74,10 @@ const gl = glDouble(), gscene=surface(gl), gstatus=[], gpu = new Viewer(gscene.c
 assert.equal(gpu.setMesh(tetra).renderer,'webgl');assert.equal(gl.draws.at(-1),12);
 const uploaded=gl.uploads.at(-1);assert.ok(uploaded.every(Number.isFinite));
 for(let i=0;i<uploaded.length;i+=6)assert.ok(Math.abs(Math.hypot(uploaded[i+3],uploaded[i+4],uploaded[i+5])-1)<1e-5);
+const sameVertexNormals=[];
+for(let i=0;i<uploaded.length;i+=6){if(Math.abs(uploaded[i]-uploaded[0])<1e-6&&Math.abs(uploaded[i+1]-uploaded[1])<1e-6&&Math.abs(uploaded[i+2]-uploaded[2])<1e-6)sameVertexNormals.push(uploaded.slice(i+3,i+6));}
+assert.ok(sameVertexNormals.length>1);for(const n of sameVertexNormals)assert.deepEqual(n,sameVertexNormals[0]);
 assert.match(gstatus.at(-1), /非 GPU／NPU/);gpu.setMesh({vertices:[],faces:[],units:'voxel'});assert.match(gstatus.at(-1),/尚無/);
-gpu.destroy();assert.ok(gl.deletes>=2);checks.push('WebGL upload has finite geometry and unit flat normals; renderer status never claims hardware inference');
+gpu.destroy();assert.ok(gl.deletes>=2);checks.push('WebGL upload has finite geometry and unit shared vertex normals; renderer status never claims hardware inference');
 
 process.stdout.write(JSON.stringify({passed:true,checks,checks_count:checks.length,visual_qa:false,contexts:'recording doubles'},null,2)+'\n');
