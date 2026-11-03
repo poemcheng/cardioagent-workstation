@@ -28,7 +28,7 @@ class ReleasePackageTests(unittest.TestCase):
 
     def test_release_does_not_copy_local_records_credentials_or_weights(self):
         for path in ['integrated_demo_data/cardiо.sqlite3','evidence/target_runs/run/acceptance.json','data/session.key',
-                     '.env','models/private.gguf','models/detector.onnx','models/detector.json','docs/../../private.txt','/tmp/private.txt']:
+                     '.env','models/private.gguf','models/detector.onnx','models/detector.json','docs/../../private.txt','/tmp/private.txt','C:/private.txt','safe.txt:stream']:
             self.assertFalse(permitted(path),path)
         for path in ['cardio/analysis.py','docs/cardio-runtime.zip','datasets/mts_dialog/raw/MTS-Dialog-TrainingSet.csv']:
             self.assertTrue(permitted(path),path)

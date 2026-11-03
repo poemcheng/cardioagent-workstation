@@ -302,14 +302,21 @@ class Analysis:
         for relative in slices:
             path = self._source_path(relative)
             a = np.load(path, allow_pickle=False, mmap_mode="r")
-            if a.ndim != 2 or min(a.shape) < 8 or max(a.shape) > 4096 or a.dtype.kind not in "uif":
-                raise ValueError("僅接受有限大小的二維數值切片。")
-            pixels += a.size
-            if pixels > 32_000_000:
-                raise ValueError("體積像素上限為 3,200 萬，請分段分析。")
-            if not np.isfinite(a).all():
-                raise ValueError("來源影像含非有限像素。")
-            arrays.append(a)
+            try:
+                if a.ndim != 2 or min(a.shape) < 8 or max(a.shape) > 4096 or a.dtype.kind not in "uif":
+                    raise ValueError("僅接受有限大小的二維數值切片。")
+                pixels += a.size
+                if pixels > 32_000_000:
+                    raise ValueError("體積像素上限為 3,200 萬，請分段分析。")
+                if not np.isfinite(a).all():
+                    raise ValueError("來源影像含非有限像素。")
+                # Downstream models may retain inputs. Give them a bounded,
+                # independent snapshot rather than a live Windows file mapping.
+                arrays.append(np.array(a, copy=True))
+            finally:
+                mapping = getattr(a, "_mmap", None)
+                if mapping is not None:
+                    mapping.close()
             hashes.append(sha256(path))
         return arrays, hashes
 

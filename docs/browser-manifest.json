@@ -18,6 +18,6 @@
   "data_persistence": "this_tab_only",
   "llm_or_clinical_models_bundled": false,
   "amd_npu_execution": false,
-  "runtime_update_sha256": "8a00a418bd2abb769371e8715d57903a765efbc5e62152ee16cf7332f21914df",
-  "runtime_update_bytes": 42686
+  "runtime_update_sha256": "0ac0dac51c71a9308ce8fb7cae24bc748a9b98c843d6c23e6e8a725093717c06",
+  "runtime_update_bytes": 42866
 }

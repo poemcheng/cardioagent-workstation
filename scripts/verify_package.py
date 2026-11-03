@@ -2,7 +2,7 @@
 import argparse
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path,PurePosixPath
 import re
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -15,7 +15,7 @@ def verify(root=ROOT):
     if not isinstance(items,list) or not items:raise ValueError('Package manifest has no files.')
     for item in items:
         name=item.get('path','');relative=Path(name)
-        if (not name or relative.is_absolute() or '..' in relative.parts or '\\' in name
+        if (not name or relative.is_absolute() or PurePosixPath(name).is_absolute() or '..' in relative.parts or '\\' in name or ':' in name
                 or name in seen or not re.fullmatch('[a-f0-9]{64}',item.get('sha256',''))):
             failed.append(name or '<invalid>');continue
         seen.add(name);path=(root/relative).resolve()

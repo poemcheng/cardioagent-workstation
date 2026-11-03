@@ -42,6 +42,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Wheel download failed' }
           python -m pip install --no-index --find-links wheelhouse -r requirements-vision.txt
           if ($LASTEXITCODE -ne 0) { throw 'Offline dependency installation failed' }
+          python -m pip install -r requirements-dev.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Development test dependency installation failed' }
+          New-Item -ItemType Directory -Force release_evidence | Out-Null
+          python -m pip freeze > release_evidence/ci_environment.txt
       - name: Prepare source-pinned data and parse PowerShell launch scripts
         shell: pwsh
         run: |

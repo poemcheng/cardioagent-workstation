@@ -9,7 +9,7 @@ from datetime import datetime,timezone
 from email.parser import BytesParser
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path,PurePosixPath
 import re
 import shutil
 import subprocess
@@ -63,8 +63,8 @@ def wheel_inventory(root,with_vision=True):
 
 
 def permitted(name):
-    path=Path(name)
-    if path.is_absolute() or '..' in path.parts or '\\' in name:return False
+    path=PurePosixPath(name)
+    if path.is_absolute() or '..' in path.parts or '\\' in name or ':' in name:return False
     if not path.parts:return False
     if path.parts[0] in {'.git','.github','.venv','data','dist','evidence','evidence_v1','wheelhouse','release_evidence'}:return False
     if any(p in {'__pycache__','node_modules'} or p.startswith('integrated_demo_data') or p.startswith('demo_data') for p in path.parts):return False

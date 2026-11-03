@@ -66,6 +66,20 @@ class AnalysisTests(unittest.TestCase):
         return self.analysis.execute({"case_id": "demo-ct-positive", "mode": "demo", "center": 1} | kwargs,
                                      "test-researcher")
 
+    def test_loaded_slices_are_independent_snapshots_without_live_file_locks(self):
+        case = self.store.case('demo-ct-positive')
+        arrays, hashes = self.analysis._load(case)
+        self.assertTrue(all(not isinstance(a, np.memmap) for a in arrays))
+        first = arrays[0].copy()
+        path = self.data / case['slices'][0]
+        raw = path.read_bytes()
+        # A retained mapped input would prevent this operation on Windows.
+        path.unlink()
+        np.save(path, np.zeros_like(first), allow_pickle=False)
+        np.testing.assert_array_equal(arrays[0], first)
+        path.write_bytes(raw)
+        self.assertEqual(len(hashes), len(case['slices']))
+
     def test_actual_synthetic_pipeline_measures_sources_and_persists_for_review(self):
         result = self.execute()
         self.assertEqual(result["status"], "pending_review")

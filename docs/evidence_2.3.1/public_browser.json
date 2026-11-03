@@ -1,0 +1,29 @@
+{
+  "schema": "cardio-public-browser-observation/1",
+  "observed_at": "2026-11-03T05:06:55.817Z",
+  "deployment_commit": "c408bc486b985c9592ddfa05e660d43d9b489848",
+  "version": "2.3.1",
+  "url": "https://poemcheng.github.io/cardioagent-workstation/?revision=2.3.1",
+  "union": {
+    "foreground_voxels": 75846,
+    "preview_vertices": 65374,
+    "preview_triangles": 130744
+  },
+  "class_2": {
+    "foreground_voxels": 25573,
+    "preview_vertices": 64778,
+    "preview_triangles": 129560
+  },
+  "source": "provided_research_labels_not_inference",
+  "physical_geometry_verified": false,
+  "physical_volume_mm3": null,
+  "renderer": "WebGL_surface_preview_not_hardware_inference_evidence",
+  "console_errors": 0,
+  "npu_execution_verified": false,
+  "clinical_topology_verified": false,
+  "screenshots": [
+    "3D_union.png",
+    "3D_class2.png"
+  ],
+  "scope": "Rendered public UI and visible metrics at the pinned deployment; separate from subsequent Windows resource-lifetime fixes and target AI PC validation."
+}
