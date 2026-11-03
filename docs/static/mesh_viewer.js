@@ -3,7 +3,7 @@
   'use strict';
   const MAX_FACES = 200000, MAX_VERTICES = 600000, CPU_FACE_LIMIT = 8000;
   const VERTEX = 'attribute vec3 aPosition; attribute vec3 aNormal; uniform mat3 uRotation; uniform vec2 uScale; varying vec3 vNormal; void main(){vec3 p=uRotation*aPosition; gl_Position=vec4(p.x*uScale.x,p.y*uScale.y,p.z*0.5,1.0); vNormal=uRotation*aNormal;}';
-  const FRAGMENT = 'precision mediump float; varying vec3 vNormal; void main(){vec3 n=normalize(vNormal); if(!gl_FrontFacing)n=-n; vec3 l=normalize(vec3(-0.4,0.65,-1.0)); float key=max(dot(n,l),0.0); float fill=max(dot(n,normalize(vec3(0.7,-0.25,-0.3))),0.0); float spec=pow(max(dot(reflect(-l,n),vec3(0.0,0.0,-1.0)),0.0),28.0); gl_FragColor=vec4(vec3(0.69,0.44,0.40)*(0.26+0.56*key+0.18*fill)+vec3(0.13*spec),1.0);}';
+  const FRAGMENT = 'precision mediump float; varying vec3 vNormal; void main(){vec3 n=normalize(vNormal); if(n.z>0.0)n=-n; vec3 l=normalize(vec3(-0.4,0.65,-1.0)); float key=max(dot(n,l),0.0); float fill=max(dot(n,normalize(vec3(0.7,-0.25,-0.3))),0.0); float spec=pow(max(dot(reflect(-l,n),vec3(0.0,0.0,-1.0)),0.0),28.0); gl_FragColor=vec4(vec3(0.72,0.49,0.45)*(0.34+0.52*key+0.18*fill)+vec3(0.13*spec),1.0);}';
   function finite(value) { return typeof value === 'number' && Number.isFinite(value) && Math.abs(value) <= 1e9; }
   function validate(mesh) {
     if (!mesh || !Array.isArray(mesh.vertices) || !Array.isArray(mesh.faces)) throw Error('3D 網格必須包含 vertices 與 faces 陣列。');
@@ -27,7 +27,7 @@
       this.win = canvas.ownerDocument?.defaultView || root;
       this.onStatus = typeof options.onStatus === 'function' ? options.onStatus : function () {};
       this.destroyed = false; this.points = new Float32Array(); this.faces = new Uint32Array();
-      this.cpuFaces = new Uint32Array(); this.units = ''; this.pitch = -.30; this.yaw = .42; this.zoom = 1;
+      this.cpuFaces = new Uint32Array(); this.units = ''; this.pitch = -1.12; this.yaw = .42; this.zoom = 1;
       this.width = 1; this.height = 1; this.pointer = null; this.frame = null; this.buffer = null;
       this.gl = null; this.ctx = null; this.program = null; this.contextLost = false;
       this.handlers = []; this.originalTouchAction = canvas.style?.touchAction;
@@ -165,7 +165,7 @@
       if (this.gl) this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
       this._draw();
     }
-    reset() { if (this.destroyed) return; this.pitch = -.30; this.yaw = .42; this.zoom = 1; this._draw(); }
+    reset() { if (this.destroyed) return; this.pitch = -1.12; this.yaw = .42; this.zoom = 1; this._draw(); }
     _schedule() {
       if (this.frame !== null || this.destroyed) return;
       const draw = () => { this.frame = null; if (!this.destroyed) this._draw(); };
