@@ -520,7 +520,7 @@ class Analysis:
             self._path(compare_to)
         ident = uuid.uuid4().hex
         created = now()
-        result = {"schema": "cardio-integrated-analysis/1", "software_version": "2.1.0", "id": ident, "case_id": case_id, "run_id": run_id,
+        result = {"schema": "cardio-integrated-analysis/1", "software_version": "2.3.0", "id": ident, "case_id": case_id, "run_id": run_id,
                   "version": 1, "status": "pending_review", "created_at": created, "updated_at": created, "actor": actor,
                   "settings": {"mode": mode, "center": center, "threshold": float(threshold), "segmentation_mode": segmentation_mode, "reference_class": reference_class, "use_llm": use_llm,
                                "model": model_id, "compare_to": compare_to},
