@@ -1,3 +1,14 @@
+# CardioAgent 2.4.0 會診準備中心
+
+新增任務規格、來源核對、實際工具進度、共用本機模型佇列與成本情境。
+
+- [公開操作](https://poemcheng.github.io/cardioagent-workstation/?view=workspace&revision=2.4.0)
+- 本機：`http://127.0.0.1:8765/workspace`
+- [操作與版本範圍](docs/RELEASE_2.4.0_zh-TW.md)
+- [Windows 軟體安裝包](https://github.com/poemcheng/cardioagent-workstation/releases/latest)
+
+以下保留既有工作站及研究功能說明；歷史版本紀錄不代表本版 AMD 或臨床驗收。
+
 # CardioAgent 心臟影像研究工作站
 
 **公開操作網址：[開啟工作站](https://poemcheng.github.io/cardioagent-workstation/)**

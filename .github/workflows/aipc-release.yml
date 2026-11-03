@@ -81,5 +81,5 @@ jobs:
           $short = $env:GITHUB_SHA.Substring(0,7)
           $tag = "aipc-$version-$short"
           $assets = @(Get-ChildItem dist -File | ForEach-Object { $_.FullName })
-          gh release create $tag @assets --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "CardioAgent $version AMD AI PC software package ($short)" --notes-file docs/RELEASE_2.3.1_zh-TW.md
+          gh release create $tag @assets --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "CardioAgent $version AMD AI PC software package ($short)" --notes-file "docs/RELEASE_$($version)_zh-TW.md"
           if ($LASTEXITCODE -ne 0) { throw 'Public release creation failed' }

@@ -1,0 +1,20 @@
+{
+  "schema": "cardio-preparation-validation/1",
+  "software_version": "2.4.0",
+  "date": "2026-11-03",
+  "python_tests": {
+    "passed": 217,
+    "elapsed_seconds": 64.762,
+    "scope": "development host software tests"
+  },
+  "preparation_dom_checks": 7,
+  "renderer_logic_checks": 7,
+  "browser_visual_qa": false,
+  "browser_wasm_execution_verified": false,
+  "browser_qa_limit": "Browser control runtime failed to initialize; no alternative browser runner was used.",
+  "amd_hardware_verified": false,
+  "npu_execution_verified": false,
+  "clinical_effect_verified": false,
+  "cost_results": "user_entered_scenarios_only",
+  "historical_manuscript_metrics_retested": false
+}

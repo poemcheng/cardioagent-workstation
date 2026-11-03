@@ -1,0 +1,19 @@
+Cannot start demo: Address already in use. Check the data directory and whether port 8765 is in use.
+{
+  "baseline_ready": true,
+  "local_llm_ready": false
+}
+{
+  "baseline_ready": true,
+  "local_llm_ready": false
+}
+CardioAgent integrated analysis: http://127.0.0.1:9876
+Isolated demo data: /tmp/tmpok5b54au
+First launch: create your own local account on the login screen. No default password.
+Included CT fixtures are synthetic. Supplied MRI labels are research references, not model predictions.
+Model weights/drivers are not bundled; AMD execution and clinical use are not validated.
+Stop with Ctrl+C. Existing work is retained in the demo directory.
+----------------------------------------------------------------------
+Ran 217 tests in 64.762s
+
+OK

@@ -326,4 +326,6 @@ def create_app(data_dir=None, synchronous=False, recover_interrupted=True, acces
     register_analysis_routes(app, ROOT, data, store, detector, planner, hospital, current_user, actions)
     from .aipc import register_aipc_routes
     register_aipc_routes(app, ROOT, data, store, planner, current_user)
+    from .workspace import register_workspace
+    register_workspace(app, store, data, current_user, synchronous=synchronous)
     return app

@@ -1,3 +1,14 @@
+# CardioAgent 2.4.0 會診準備中心
+
+新增任務規格、來源核對、實際工具進度、共用本機模型佇列與成本情境。
+
+- [公開操作](https://poemcheng.github.io/cardioagent-workstation/?view=workspace&revision=2.4.0)
+- 本機：`http://127.0.0.1:8765/workspace`
+- [操作與版本範圍](docs/RELEASE_2.4.0_zh-TW.md)
+- [Windows 軟體安裝包](https://github.com/poemcheng/cardioagent-workstation/releases/latest)
+
+以下保留既有工作站及研究功能說明；歷史版本紀錄不代表本版 AMD 或臨床驗收。
+
 # 遠心協作 CardioAgent 2.3.1：完整影像分析與三維工作站
 
 沿用 Flask／SQLite／本機 Lemonade／ONNX 架構，將影像來源、辨識、解釋、分割、參考比對、3D 表面、人工討論與報告串成可操作流程。

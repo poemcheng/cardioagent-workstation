@@ -19,7 +19,7 @@
    heading.textContent='匯出檔案已準備完成';detail.textContent=`${download.download} · ${(blob.size/1024).toFixed(1)} KB · 由本分頁產生`;
    close.textContent='關閉';close.onclick=()=>dialog.close();dialog.id='browserExportDialog';dialog.append(heading,detail,download,document.createTextNode('　'),close);document.body.append(dialog);dialog.addEventListener('close',()=>{dialog.remove();setTimeout(()=>URL.revokeObjectURL(objectURL),60000);},{once:true});dialog.showModal();
   }catch(error){window.alert(error.message);}return;}
-  if(['/','/analysis','/research'].includes(url.pathname)){event.preventDefault();api.navigate(url.pathname+url.search);}
+  if(['/','/analysis','/research','/workspace'].includes(url.pathname)){event.preventDefault();api.navigate(url.pathname+url.search);}
  },true);
  document.addEventListener('DOMContentLoaded',()=>{for(const id of ['usersBtn','logout']){const button=document.getElementById(id);if(button)button.hidden=true;}const strip=document.querySelector('.environment-strip');if(strip)strip.firstChild.textContent='資料環境：公開研究展示 · 本分頁獨立運算 ';});
 })();

@@ -10,6 +10,8 @@ LOCAL_SPEECH_RECIPES = frozenset({"whispercpp", "flm"})
 
 class Planner:
     def __init__(self, config):
+        from .resources import ModelGate
+        self.gate = ModelGate()
         self.config = config
         parsed = urlparse(config.get("lemonade_url", "http://127.0.0.1:13305/v1"))
         if parsed.scheme != "http" or parsed.hostname != "127.0.0.1" or parsed.username or parsed.password or parsed.query or parsed.fragment or parsed.path.rstrip("/") not in {"/api/v1", "/v1"}:
@@ -19,6 +21,14 @@ class Planner:
         self.http = urllib.request.build_opener(urllib.request.ProxyHandler({}), urllib.request.HTTPRedirectHandler())
 
     def request_bytes(self, endpoint, raw=None, content_type="application/json", timeout=5):
+        if endpoint in {"/chat/completions", "/audio/transcriptions"}:
+            with self.gate.slot(endpoint, timeout=timeout) as trace:
+                result = self._request_bytes(endpoint, raw, content_type, timeout)
+            result['_cardio_request'] = trace.copy()
+            return result
+        return self._request_bytes(endpoint, raw, content_type, timeout)
+
+    def _request_bytes(self, endpoint, raw=None, content_type="application/json", timeout=5):
         if endpoint not in {"/models", "/chat/completions", "/audio/transcriptions"}:
             raise ValueError("不允許的本機模型端點。")
         req = urllib.request.Request(self.base + endpoint, data=raw, headers={"Content-Type": content_type})
